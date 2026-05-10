@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GarrisonRom | 技术博客</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* 顶部导航 */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            margin-left: 28px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover { color: #58a6ff; }
+        
+        /* 英雄区（个人简介） */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #58a6ff 0%, #238636 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .hero h1 {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+            color: #f0f6fc;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: #8b949e;
+            margin-bottom: 20px;
+        }
+        
+        .hero .bio {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #8b949e;
+            font-size: 1rem;
+        }
+        
+        .social-links {
+            margin-top: 28px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            padding: 10px 24px;
+            margin: 0 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #238636;
+            color: white;
+            border: 1px solid #238636;
+        }
+        
+        .btn-primary:hover {
+            background: #2ea043;
+            border-color: #2ea043;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #58a6ff;
+            border: 1px solid #30363d;
+        }
+        
+        .btn-outline:hover {
+            border-color: #58a6ff;
+            background: rgba(88, 166, 255, 0.1);
+        }
+        
+        /* 内容区块 */
+        .section {
+            padding: 60px 0;
+            border-top: 1px solid #21262d;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #f0f6fc;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title::before {
+            content: "";
+            display: block;
+            width: 4px;
+            height: 24px;
+            background: #58a6ff;
+            border-radius: 2px;
+        }
+        
+        /* 技能标签 */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background: rgba(88, 166, 255, 0.1);
+            color: #58a6ff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        
+        /* 项目卡片 */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        
+        .project-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: #58a6ff;
+        }
+        
+        .project-card h3 {
+            color: #58a6ff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .project-card p {
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        
+        .project-card .tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .project-card .tech span {
+            background: #21262d;
+            color: #c9d1d9;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        
+        /* 论文/经历时间线 */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #30363d;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 28px;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #58a6ff;
+            border: 2px solid #0d1117;
+        }
+        
+        .timeline-item .time {
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-item h4 {
+            color: #f0f6fc;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-item p {
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #21262d;
+            color: #484f58;
+            font-size: 0.85rem;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .nav-links { display: none; }
+            .projects { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">GarrisonRom</a>
+            <div class="nav-links">
+                <a href="#about">关于</a>
+                <a href="#skills">技能</a>
+                <a href="#projects">项目</a>
+                <a href="#papers">学术</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="avatar">G</div>
+            <h1>罗嘉鑫</h1>
+            <p class="subtitle">华南理工大学 · 计算机博0 · AI & BCI</p>
+            <p class="bio">
+                研究方向聚焦大模型后训练适应（LLM Post-Training Adaptation）与脑机接口（BCI）的交叉领域。
+                相信好的技术应该被清晰地表达。这里记录我的学习路线、项目复盘与思考。
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/GarrisonRom" class="btn-primary" target="_blank">GitHub</a>
+                <a href="mailto:1790297741@qq.com" class="btn-outline">联系我</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="skills">
+        <div class="container">
+            <h2 class="section-title">技术栈</h2>
+            <div class="skills">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">PyTorch</span>
+                <span class="skill-tag">Go</span>
+                <span class="skill-tag">Flutter</span>
+                <span class="skill-tag">Deep Learning</span>
+                <span class="skill-tag">BCI / EEG</span>
+                <span class="skill-tag">LLM Fine-tuning</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">PostgreSQL</span>
+                <span class="skill-tag">Git</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title">项目</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <h3>🧠 NeuroLoop</h3>
+                    <p>基于生理表型匹配的 BCI 零梯度快速校准系统。使用 Virtual Subject Twinning 技术，将新用户校准数据从 200 trials 降至 16-shot。</p>
+                    <div class="tech">
+                        <span>Python</span>
+                        <span>PyTorch</span>
+                        <span>EEG</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h3>🔧 智慧维保平台</h3>
+                    <p>面向电梯维保行业的法律风控级 SaaS 系统。支持执法仪视频实时上传、GPS 校验防作弊、证据链不可篡改审计。</p>
+                    <div class="tech">
+                        <span>Go</span>
+                        <span>Flutter</span>
+                        <span>PostgreSQL</span>
+                        <span>MinIO</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h3>📝 技术博客</h3>
+                    <p>本站点。记录从论文阅读、工程实践到职业发展的完整思考链路。目标是建立可检索的个人知识库。</p>
+                    <div class="tech">
+                        <span>GitHub Pages</span>
+                        <span>HTML/CSS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="papers">
+        <div class="container">
+            <h2 class="section-title">学术经历</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">2026</div>
+                    <h4>ACL 2026 · Main Conference Poster</h4>
+                    <p>二作 · 思维链训练中的程序性推理结构揭示</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2026</div>
+                    <h4>ICML 2026 · Accept (Regular)</h4>
+                    <p>二作 · 四位审稿人全 4 分</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2026</div>
+                    <h4>KDD 2026 · Under Review</h4>
+                    <p>二作 · 与刘嘉师姐合作</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2026</div>
+                    <h4>华南理工大学 · 博士入学</h4>
+                    <p>计算机学院 · 研究方向：LLM Post-Training Adaptation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p> GarrisonRom. Built with GitHub Pages.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
