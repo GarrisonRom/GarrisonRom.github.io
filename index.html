@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GarrisonRom | 技术博客</title>
+    <title>GarrisonRom | Tech Blog</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -20,10 +20,19 @@
             padding: 0 24px;
         }
         
-        /* 顶部导航 */
+        /* 语言显隐控制 */
+        body.lang-en .lang-zh { display: none; }
+        body.lang-zh .lang-en { display: none; }
+        
+        /* 导航 */
         nav {
-            padding: 20px 0;
+            padding: 16px 0;
             border-bottom: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 100;
         }
         
         nav .container {
@@ -33,69 +42,97 @@
         }
         
         .logo {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #58a6ff;
             text-decoration: none;
         }
         
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
         .nav-links a {
             color: #8b949e;
             text-decoration: none;
-            margin-left: 28px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: color 0.2s;
         }
         
         .nav-links a:hover { color: #58a6ff; }
         
-        /* 英雄区（个人简介） */
+        .lang-switch {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .lang-switch button {
+            background: transparent;
+            border: 1px solid #30363d;
+            color: #8b949e;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        
+        .lang-switch button.active {
+            background: #58a6ff;
+            color: #0d1117;
+            border-color: #58a6ff;
+            font-weight: 600;
+        }
+        
+        /* 英雄区 */
         .hero {
-            padding: 80px 0 60px;
+            padding: 70px 0 50px;
             text-align: center;
         }
         
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             background: linear-gradient(135deg, #58a6ff 0%, #238636 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 24px;
-            font-size: 2.5rem;
+            margin: 0 auto 20px;
+            font-size: 2.2rem;
             color: white;
             font-weight: 700;
         }
         
         .hero h1 {
-            font-size: 2.4rem;
-            margin-bottom: 12px;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
             color: #f0f6fc;
         }
         
         .hero .subtitle {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: #8b949e;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         
         .hero .bio {
             max-width: 600px;
             margin: 0 auto;
             color: #8b949e;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         
         .social-links {
-            margin-top: 28px;
+            margin-top: 24px;
         }
         
         .social-links a {
             display: inline-block;
             padding: 10px 24px;
-            margin: 0 8px;
+            margin: 0 6px;
             border-radius: 6px;
             text-decoration: none;
             font-size: 0.9rem;
@@ -109,10 +146,7 @@
             border: 1px solid #238636;
         }
         
-        .btn-primary:hover {
-            background: #2ea043;
-            border-color: #2ea043;
-        }
+        .btn-primary:hover { background: #2ea043; }
         
         .btn-outline {
             background: transparent;
@@ -125,16 +159,16 @@
             background: rgba(88, 166, 255, 0.1);
         }
         
-        /* 内容区块 */
+        /* 通用区块 */
         .section {
-            padding: 60px 0;
+            padding: 50px 0;
             border-top: 1px solid #21262d;
         }
         
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: #f0f6fc;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -144,12 +178,12 @@
             content: "";
             display: block;
             width: 4px;
-            height: 24px;
+            height: 22px;
             background: #58a6ff;
             border-radius: 2px;
         }
         
-        /* 技能标签 */
+        /* 技能 */
         .skills {
             display: flex;
             flex-wrap: wrap;
@@ -176,7 +210,7 @@
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 12px;
-            padding: 24px;
+            padding: 22px;
             transition: transform 0.2s, border-color 0.2s;
         }
         
@@ -187,14 +221,14 @@
         
         .project-card h3 {
             color: #58a6ff;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 10px;
         }
         
         .project-card p {
             color: #8b949e;
             font-size: 0.9rem;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         
         .project-card .tech {
@@ -211,7 +245,282 @@
             font-size: 0.75rem;
         }
         
-        /* 论文/经历时间线 */
+        /* 电梯折叠 */
+        .elevator-wrapper {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .more-btn {
+            background: transparent;
+            border: 1px dashed #484f58;
+            color: #484f58;
+            padding: 10px 28px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        
+        .more-btn:hover {
+            border-color: #8b949e;
+            color: #8b949e;
+        }
+        
+        .collapsed-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s;
+            margin-top: 0;
+        }
+        
+        .collapsed-content.open {
+            max-height: 500px;
+            opacity: 0.4;
+            margin-top: 20px;
+        }
+        
+        .collapsed-content.open:hover {
+            opacity: 0.8;
+        }
+        
+        /* Idea 轮播 */
+        .idea-carousel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .idea-slides {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            min-height: 220px;
+        }
+        
+        .idea-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .idea-card.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+            position: relative;
+        }
+        
+        .idea-card.rejected {
+            filter: grayscale(100%);
+            opacity: 0.5;
+        }
+        
+        .idea-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        
+        .idea-id {
+            font-size: 0.75rem;
+            color: #58a6ff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .idea-status {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        
+        .idea-status.preparing { background: rgba(88, 166, 255, 0.15); color: #58a6ff; }
+        .idea-status.submitted { background: rgba(35, 134, 54, 0.15); color: #3fb950; }
+        .idea-status.rejected { background: rgba(248, 81, 73, 0.15); color: #f85149; }
+        .idea-status.accepted { background: rgba(35, 134, 54, 0.2); color: #3fb950; }
+        
+        .idea-card h3 {
+            color: #f0f6fc;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+        
+        .idea-card p {
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        
+        .idea-target {
+            display: inline-block;
+            background: #21262d;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #c9d1d9;
+        }
+        
+        .idea-target strong {
+            color: #f0883e;
+            margin-left: 6px;
+        }
+        
+        .arrow {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .arrow:hover {
+            background: #30363d;
+            color: #58a6ff;
+        }
+        
+        .idea-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #30363d;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .dot.active { background: #58a6ff; }
+        
+        /* 心得 */
+        .insight-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .insight-item {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative;
+            border-left: 3px solid #58a6ff;
+        }
+        
+        .insight-item:hover {
+            border-color: #58a6ff;
+            transform: translateX(4px);
+        }
+        
+        .insight-item h4 {
+            color: #f0f6fc;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+        
+        .insight-item .insight-date {
+            font-size: 0.8rem;
+            color: #484f58;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .insight-item p {
+            color: #8b949e;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .read-more {
+            display: inline-block;
+            margin-top: 10px;
+            color: #58a6ff;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* 心得详情 */
+        .insight-detail {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .insight-detail.show {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .back-btn {
+            background: transparent;
+            border: 1px solid #30363d;
+            color: #8b949e;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .back-btn:hover {
+            border-color: #58a6ff;
+            color: #58a6ff;
+        }
+        
+        .insight-body {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 28px;
+            color: #c9d1d9;
+            line-height: 1.8;
+        }
+        
+        .insight-body h3 {
+            color: #f0f6fc;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+        
+        .insight-body p {
+            margin-bottom: 14px;
+            color: #8b949e;
+        }
+        
+        /* 时间线 */
         .timeline {
             position: relative;
             padding-left: 28px;
@@ -229,7 +538,7 @@
         
         .timeline-item {
             position: relative;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
         
         .timeline-item::before {
@@ -245,20 +554,31 @@
         }
         
         .timeline-item .time {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #8b949e;
             margin-bottom: 4px;
         }
         
         .timeline-item h4 {
             color: #f0f6fc;
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-bottom: 4px;
         }
         
         .timeline-item p {
             color: #8b949e;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+        }
+        
+        .author-tag {
+            display: inline-block;
+            background: rgba(88, 166, 255, 0.1);
+            color: #58a6ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+            font-weight: 500;
         }
         
         /* 页脚 */
@@ -267,50 +587,91 @@
             padding: 40px 0;
             border-top: 1px solid #21262d;
             color: #484f58;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         
         /* 响应式 */
         @media (max-width: 600px) {
-            .hero h1 { font-size: 1.8rem; }
-            .nav-links { display: none; }
+            .hero h1 { font-size: 1.7rem; }
+            .nav-links { gap: 12px; }
+            .nav-links a { font-size: 0.8rem; }
             .projects { grid-template-columns: 1fr; }
+            .idea-carousel { gap: 8px; }
         }
     </style>
 </head>
-<body>
+<body class="lang-zh">
 
     <nav>
         <div class="container">
             <a href="#" class="logo">GarrisonRom</a>
             <div class="nav-links">
-                <a href="#about">关于</a>
-                <a href="#skills">技能</a>
-                <a href="#projects">项目</a>
-                <a href="#papers">学术</a>
+                <a href="#about">
+                    <span class="lang-zh">关于</span>
+                    <span class="lang-en">About</span>
+                </a>
+                <a href="#skills">
+                    <span class="lang-zh">技能</span>
+                    <span class="lang-en">Skills</span>
+                </a>
+                <a href="#projects">
+                    <span class="lang-zh">项目</span>
+                    <span class="lang-en">Projects</span>
+                </a>
+                <a href="#ideas">Idea</a>
+                <a href="#insights">
+                    <span class="lang-zh">心得</span>
+                    <span class="lang-en">Insights</span>
+                </a>
+                <a href="#papers">
+                    <span class="lang-zh">学术</span>
+                    <span class="lang-en">Research</span>
+                </a>
+            </div>
+            <div class="lang-switch">
+                <button onclick="setLang('zh')" class="active" id="btn-zh">中</button>
+                <button onclick="setLang('en')" id="btn-en">EN</button>
             </div>
         </div>
     </nav>
 
-    <section class="hero">
+    <section class="hero" id="about">
         <div class="container">
             <div class="avatar">G</div>
-            <h1>罗嘉鑫</h1>
-            <p class="subtitle">华南理工大学 · 计算机博0 · AI & BCI</p>
+            <h1>
+                <span class="lang-zh">罗嘉鑫</span>
+                <span class="lang-en">Jiaxin Luo</span>
+            </h1>
+            <p class="subtitle">
+                <span class="lang-zh">华南理工大学 · 计算机博0 · AI & BCI</span>
+                <span class="lang-en">SCUT · CS PhD · AI & BCI</span>
+            </p>
             <p class="bio">
-                研究方向聚焦大模型后训练适应（LLM Post-Training Adaptation）与脑机接口（BCI）的交叉领域。
-                相信好的技术应该被清晰地表达。这里记录我的学习路线、项目复盘与思考。
+                <span class="lang-zh">
+                    研究方向聚焦大模型后训练适应（LLM Post-Training Adaptation）与脑机接口（BCI）的交叉领域。
+                    相信好的技术应该被清晰地表达。这里记录我的学习路线、项目复盘与思考。
+                </span>
+                <span class="lang-en">
+                    Researching LLM Post-Training Adaptation & Brain-Computer Interfaces.
+                    I believe good technology deserves clear expression.
+                </span>
             </p>
             <div class="social-links">
                 <a href="https://github.com/GarrisonRom" class="btn-primary" target="_blank">GitHub</a>
-                <a href="mailto:1790297741@qq.com" class="btn-outline">联系我</a>
+                <a href="mailto:1790297741@qq.com" class="btn-outline">
+                    <span class="lang-zh">联系我</span>
+                    <span class="lang-en">Contact</span>
+                </a>
             </div>
         </div>
     </section>
 
     <section class="section" id="skills">
         <div class="container">
-            <h2 class="section-title">技术栈</h2>
+            <h2 class="section-title">
+                <span class="lang-zh">技术栈</span>
+                <span class="lang-en">Tech Stack</span>
+            </h2>
             <div class="skills">
                 <span class="skill-tag">Python</span>
                 <span class="skill-tag">PyTorch</span>
@@ -328,11 +689,17 @@
 
     <section class="section" id="projects">
         <div class="container">
-            <h2 class="section-title">项目</h2>
+            <h2 class="section-title">
+                <span class="lang-zh">项目</span>
+                <span class="lang-en">Projects</span>
+            </h2>
             <div class="projects">
                 <div class="project-card">
                     <h3>🧠 NeuroLoop</h3>
-                    <p>基于生理表型匹配的 BCI 零梯度快速校准系统。使用 Virtual Subject Twinning 技术，将新用户校准数据从 200 trials 降至 16-shot。</p>
+                    <p>
+                        <span class="lang-zh">人工智能赋能脑机接口。基于生理表型匹配的 BCI 零梯度快速校准系统，将新用户校准数据从 200 trials 降至 16-shot。</span>
+                        <span class="lang-en">AI-Empowered Brain-Computer Interface. Zero-gradient rapid BCI calibration via physiological phenotyping, reducing calibration from 200 trials to 16-shot.</span>
+                    </p>
                     <div class="tech">
                         <span>Python</span>
                         <span>PyTorch</span>
@@ -341,22 +708,200 @@
                 </div>
                 
                 <div class="project-card">
-                    <h3>🔧 智慧维保平台</h3>
-                    <p>面向电梯维保行业的法律风控级 SaaS 系统。支持执法仪视频实时上传、GPS 校验防作弊、证据链不可篡改审计。</p>
-                    <div class="tech">
-                        <span>Go</span>
-                        <span>Flutter</span>
-                        <span>PostgreSQL</span>
-                        <span>MinIO</span>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <h3>📝 技术博客</h3>
-                    <p>本站点。记录从论文阅读、工程实践到职业发展的完整思考链路。目标是建立可检索的个人知识库。</p>
+                    <h3>📝 Tech Blog</h3>
+                    <p>
+                        <span class="lang-zh">本站点。记录从论文阅读、工程实践到职业发展的完整思考链路。</span>
+                        <span class="lang-en">This site. A searchable knowledge base for paper readings, engineering practice, and career thinking.</span>
+                    </p>
                     <div class="tech">
                         <span>GitHub Pages</span>
                         <span>HTML/CSS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 电梯项目：折叠在最底部 -->
+            <div class="elevator-wrapper">
+                <button class="more-btn" onclick="toggleElevator()">
+                    <span class="lang-zh">🔧 智慧维保平台（商业项目）— 点击展开</span>
+                    <span class="lang-en">🔧 Elevator SaaS (Commercial) — Click to expand</span>
+                </button>
+                <div id="elevator-details" class="collapsed-content">
+                    <div class="project-card">
+                        <h3>🔧 智慧维保平台</h3>
+                        <p>
+                            <span class="lang-zh">面向电梯维保行业的法律风控级 SaaS 系统。支持执法仪视频实时上传、GPS 校验防作弊、证据链不可篡改审计。</span>
+                            <span class="lang-en">Legal-grade SaaS for elevator maintenance industry. Bodycam video upload, GPS anti-cheat, tamper-proof evidence chain.</span>
+                        </p>
+                        <div class="tech">
+                            <span>Go</span>
+                            <span>Flutter</span>
+                            <span>PostgreSQL</span>
+                            <span>MinIO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="ideas">
+        <div class="container">
+            <h2 class="section-title">Idea Lab</h2>
+            <div class="idea-carousel">
+                <button class="arrow left" onclick="changeIdea(-1)">‹</button>
+                
+                <div class="idea-slides">
+                    <!-- Idea 1: 正常彩色 -->
+                    <div class="idea-card active" data-index="0">
+                        <div class="idea-header">
+                            <span class="idea-id">IDEA 01</span>
+                            <span class="idea-status preparing">Preparing</span>
+                        </div>
+                        <h3>
+                            <span class="lang-zh">NeuroLoop-X：跨被试自适应 BCI 框架</span>
+                            <span class="lang-en">NeuroLoop-X: Cross-Subject Adaptive BCI</span>
+                        </h3>
+                        <p>
+                            <span class="lang-zh">基于元学习与生理指纹的跨域脑机接口自适应方法，实现新患者首日即插即用。</span>
+                            <span class="lang-en">Meta-learning + physiological fingerprinting for plug-and-play BCI on new patients from day one.</span>
+                        </p>
+                        <div class="idea-target">
+                            <span class="lang-zh">目标会议</span>
+                            <span class="lang-en">Target</span>
+                            <strong>AAAI 2027</strong>
+                        </div>
+                    </div>
+
+                    <!-- Idea 2: 灰度示例（假设被拒） -->
+                    <div class="idea-card rejected" data-index="1">
+                        <div class="idea-header">
+                            <span class="idea-id">IDEA 00</span>
+                            <span class="idea-status rejected">Rejected</span>
+                        </div>
+                        <h3>
+                            <span class="lang-zh">早期原型：Digital Twin for EEG</span>
+                            <span class="lang-en">Early Prototype: EEG Digital Twin</span>
+                        </h3>
+                        <p>
+                            <span class="lang-zh">第一版数字孪生构想，因理论深度不足被拒，核心思路已合并至 NeuroLoop。</span>
+                            <span class="lang-en">First digital twin concept. Rejected due to insufficient theoretical depth. Core ideas merged into NeuroLoop.</span>
+                        </p>
+                        <div class="idea-target">
+                            <span class="lang-zh">曾投会议</span>
+                            <span class="lang-en">Submitted to</span>
+                            <strong>NeurIPS 2025</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="arrow right" onclick="changeIdea(1)">›</button>
+            </div>
+            <div class="idea-dots">
+                <span class="dot active" onclick="showIdea(0)"></span>
+                <span class="dot" onclick="showIdea(1)"></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="insights">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-zh">心得</span>
+                <span class="lang-en">Insights</span>
+            </h2>
+
+            <!-- 列表视图 -->
+            <div id="insight-list" class="insight-list">
+                <div class="insight-item" onclick="openInsight(0)">
+                    <h4>
+                        <span class="lang-zh">为什么我选择 LLM Post-Training 作为博士方向</span>
+                        <span class="lang-en">Why I Chose LLM Post-Training for PhD</span>
+                    </h4>
+                    <span class="insight-date">2026-05-10</span>
+                    <p>
+                        <span class="lang-zh">从 BCI 到 LLM 的迁移，看似跨度很大，实则共享同一个核心问题：如何让模型在动态环境中持续适应而不遗忘...</span>
+                        <span class="lang-en">The jump from BCI to LLM looks huge, but both share the same core problem: continual adaptation without forgetting...</span>
+                    </p>
+                    <span class="read-more">
+                        <span class="lang-zh">阅读更多 →</span>
+                        <span class="lang-en">Read more →</span>
+                    </span>
+                </div>
+
+                <div class="insight-item" onclick="openInsight(1)">
+                    <h4>
+                        <span class="lang-zh">电梯 SaaS 创业 30 天：从 0 到 Demo 的技术决策复盘</span>
+                        <span class="lang-en">Elevator SaaS 30-Day Sprint: Technical Decisions</span>
+                    </h4>
+                    <span class="insight-date">2026-04-20</span>
+                    <p>
+                        <span class="lang-zh">Clean Architecture 在快速迭代中的利弊，Event Sourcing 的过度设计陷阱，以及为什么最终选择 Go + Flutter...</span>
+                        <span class="lang-en">Trade-offs of Clean Architecture in rapid iteration, the over-engineering trap of Event Sourcing, and why Go + Flutter...</span>
+                    </p>
+                    <span class="read-more">
+                        <span class="lang-zh">阅读更多 →</span>
+                        <span class="lang-en">Read more →</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- 详情视图（默认隐藏） -->
+            <div id="insight-detail" class="insight-detail">
+                <button class="back-btn" onclick="backToList()">
+                    <span class="lang-zh">← 返回列表</span>
+                    <span class="lang-en">← Back to list</span>
+                </button>
+                
+                <div id="insight-content-0" class="insight-content hidden">
+                    <div class="insight-body">
+                        <h3>
+                            <span class="lang-zh">为什么我选择 LLM Post-Training 作为博士方向</span>
+                            <span class="lang-en">Why I Chose LLM Post-Training for PhD</span>
+                        </h3>
+                        <p>
+                            <span class="lang-zh">
+                                从 BCI 到 LLM 的迁移，看似跨度很大，实则共享同一个核心问题：如何让模型在动态环境中持续适应而不遗忘。
+                                BCI 里叫跨被试迁移（Cross-Subject Transfer），LLM 里叫持续学习（Continual Learning）和测试时适应（Test-Time Adaptation）。
+                                两者的本质都是：在数据分布不断变化的情况下，用极少的标注成本保持模型性能。
+                            </span>
+                            <span class="lang-en">
+                                The jump from BCI to LLM looks huge, but both share the same core: how to continually adapt without forgetting in dynamic environments.
+                                In BCI it's cross-subject transfer; in LLM it's continual learning and test-time adaptation.
+                                The essence is the same: maintain performance with minimal labeled data under distribution shift.
+                            </span>
+                        </p>
+                        <p>
+                            <span class="lang-zh">
+                                这个洞察来自我在做 NeuroLoop 时的挫败感：我花了大量时间调 EEG 信号，却发现瓶颈不在信号处理，而在"如何让模型快速适应新用户"。
+                                这正是 LLM Post-Training 社区正在攻克的命题。
+                            </span>
+                            <span class="lang-en">
+                                This insight came from the frustration during NeuroLoop: I spent months tuning EEG signals, only to realize the bottleneck wasn't signal processing,
+                                but "how to make the model adapt to new users quickly" — exactly what the LLM Post-Training community is tackling.
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div id="insight-content-1" class="insight-content hidden">
+                    <div class="insight-body">
+                        <h3>
+                            <span class="lang-zh">电梯 SaaS 创业 30 天：技术决策复盘</span>
+                            <span class="lang-en">Elevator SaaS 30-Day Sprint: Technical Decisions</span>
+                        </h3>
+                        <p>
+                            <span class="lang-zh">
+                                第一周决定用 Clean Architecture + DDD，现在回头看，对于一个人开发的 MVP 来说有些过度设计。
+                                但好处是：当我需要把离线队列模块拆成独立服务时，边界非常清晰。
+                                Event Sourcing 也一度让我陷入"为了审计而审计"的陷阱，后来简化为只记录关键业务事件（TaskCreated, PhotoUploaded）。
+                            </span>
+                            <span class="lang-en">
+                                Week 1: chose Clean Architecture + DDD. In hindsight, overkill for a solo MVP.
+                                But the benefit showed when I needed to extract the offline queue into a standalone service — boundaries were already clear.
+                                Event Sourcing also trapped me in "audit for audit's sake"; later simplified to only key events (TaskCreated, PhotoUploaded).
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -365,27 +910,53 @@
 
     <section class="section" id="papers">
         <div class="container">
-            <h2 class="section-title">学术经历</h2>
+            <h2 class="section-title">
+                <span class="lang-zh">学术经历</span>
+                <span class="lang-en">Research</span>
+            </h2>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="time">2026</div>
-                    <h4>ACL 2026 · Main Conference Poster</h4>
-                    <p>二作 · 思维链训练中的程序性推理结构揭示</p>
+                    <h4>
+                        ACL 2026 · Main Conference Poster
+                        <span class="author-tag">2nd Author</span>
+                    </h4>
+                    <p>Revealing Procedural Reasoning Structures in CoT Training</p>
                 </div>
                 <div class="timeline-item">
                     <div class="time">2026</div>
-                    <h4>ICML 2026 · Accept (Regular)</h4>
-                    <p>二作 · 四位审稿人全 4 分</p>
+                    <h4>
+                        ICML 2026 · Accept (Regular)
+                        <span class="author-tag">2nd Author</span>
+                    </h4>
+                    <p>Rating 4/4/4/4 · 四位审稿人全 4 分</p>
                 </div>
                 <div class="timeline-item">
                     <div class="time">2026</div>
-                    <h4>KDD 2026 · Under Review</h4>
-                    <p>二作 · 与刘嘉师姐合作</p>
+                    <h4>
+                        KDD 2026 · Under Review
+                        <span class="author-tag">2nd Author</span>
+                    </h4>
+                    <p>与刘嘉师姐合作</p>
                 </div>
                 <div class="timeline-item">
                     <div class="time">2026</div>
-                    <h4>华南理工大学 · 博士入学</h4>
-                    <p>计算机学院 · 研究方向：LLM Post-Training Adaptation</p>
+                    <h4>
+                        TCE · Accepted
+                        <span class="author-tag">2nd Author</span>
+                    </h4>
+                    <p>IEEE Transactions on Consumer Electronics</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2026</div>
+                    <h4>
+                        <span class="lang-zh">华南理工大学 · 博士入学</span>
+                        <span class="lang-en">SCUT · PhD Enrollment</span>
+                    </h4>
+                    <p>
+                        <span class="lang-zh">计算机学院 · 研究方向：LLM Post-Training Adaptation</span>
+                        <span class="lang-en">School of Computer Science · LLM Post-Training Adaptation</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -397,5 +968,65 @@
         </div>
     </footer>
 
+    <script>
+        // 语言切换
+        function setLang(lang) {
+            document.body.className = 'lang-' + lang;
+            document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+
+        // 电梯折叠
+        function toggleElevator() {
+            const el = document.getElementById('elevator-details');
+            el.classList.toggle('open');
+        }
+
+        // Idea 轮播
+        let currentIdea = 0;
+        const totalIdeas = 2;
+
+        function showIdea(index) {
+            if (index < 0) index = totalIdeas - 1;
+            if (index >= totalIdeas) index = 0;
+            currentIdea = index;
+
+            document.querySelectorAll('.idea-card').forEach((card, i) => {
+                card.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        function changeIdea(dir) {
+            showIdea(currentIdea + dir);
+        }
+
+        // 心得详情切换
+        function openInsight(index) {
+            document.getElementById('insight-list').style.display = 'none';
+            const detail = document.getElementById('insight-detail');
+            detail.classList.add('show');
+            
+            document.querySelectorAll('.insight-content').forEach((el, i) => {
+                el.style.display = i === index ? 'block' : 'none';
+            });
+        }
+
+        function backToList() {
+            document.getElementById('insight-list').style.display = 'flex';
+            document.getElementById('insight-detail').classList.remove('show');
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
 </body>
 </html>
