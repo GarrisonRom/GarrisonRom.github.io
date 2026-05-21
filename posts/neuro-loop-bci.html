@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroLoop BCI 研究 | GarrisonRom</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+h1 { color: var(--text-heading); font-size: 1.8rem; margin-bottom: 12px; }
+.meta { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 32px; }
+.content h2 { color: var(--text-heading); font-size: 1.3rem; margin: 32px 0 16px; }
+.content p { margin-bottom: 16px; color: var(--text); }
+.content ul { margin: 12px 0 16px 24px; color: var(--text); }
+.back { display: inline-block; margin-bottom: 24px; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<a href="../index.html" class="back">← 返回主页</a>
+<h1>NeuroLoop：BCI 跨被试自适应的生理表型方法</h1>
+<div class="meta">2026-03-26 · BCI Research · Jiaxin Luo</div>
+<div class="content">
+
+<h2>核心概念</h2>
+<p>构建基于 PhysioNet MI（109 被试）的 Virtual Subject Library（数字孪生库），通过 μ-SNR（8-13Hz）和 CSP Fisher Ratio 进行生理表型分析。对新用户进行 4-shot 探测，提取生理特征，在库中匹配 Top-5 最相似的 Virtual Subjects，使用匹配的 Virtual Subjects 数据预训练 Lightweight Adapter（848 参数），再用 16-shot 真实数据微调。</p>
+
+<h2>技术路线</h2>
+<ol>
+<li><strong>数据源</strong>：PhysioNet Motor Imagery（109 被试，64 通道，160Hz）作为 Twin Library；</li>
+<li><strong>特征</strong>：μ-SNR（mu-rhythm 信噪比）作为核心表型标记，区分 High μ-SNR（>-15dB，易适应）和 Low μ-SNR（<-20dB，BCI Illiteracy）；</li>
+<li><strong>匹配算法</strong>：Nearest Neighbor（欧氏距离，基于 μ-SNR + CSP 特征）；</li>
+<li><strong>模型</strong>：EEGNet + Adapter（Bottleneck 16→8→16，只在 Block 2/3 后插入，冻结主干）；</li>
+<li><strong>训练</strong>：Matched Twins 预训练 → 16-shot Target Subject 微调。</li>
+</ol>
+
+<h2>与已有工作的区分</h2>
+<ul>
+<li>区别于 Model-Driven Digital Twin（如 Hodgkin-Huxley 仿真）：本方法是 Data-Driven，直接使用真实被试数据作为 Twins，无需仿真模型；</li>
+<li>区别于传统 Transfer Learning（混合同源域数据）：本方法是 Physiology-Guided Matching，只选相似表型的被试预训练，而非全部 109 被试；</li>
+<li>区别于生成式方法（VAE/Diffusion）：不需要训练生成模型，避免生成质量不稳定风险，直接使用真实数据。</li>
+</ul>
+
+<h2>预期结果（基于 BNCI 2A）</h2>
+<ul>
+<li>Random Init：38.1%</li>
+<li>Generic Pre-train（全部 109 混合）：41.3%</li>
+<li>Virtual Subject Twinning（匹配 Top-5）：47.2%（目标）</li>
+</ul>
+<p>额外价值：BCI Illiteracy 预警（μ-SNR <-20dB 时提前告知用户可能不适合）。</p>
+
+<h2>投稿策略</h2>
+<ul>
+<li>首选：UbiComp/IMWUT（强调边缘部署，16-shot 适合可穿戴设备实时校准）</li>
+<li>策略性投稿 IEEE JBHI（医学长文版）</li>
+</ul>
+
+</div>
+</body>
+</html>

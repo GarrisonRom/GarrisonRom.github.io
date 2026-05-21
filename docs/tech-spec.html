@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技术规范 | GarrisonRom</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+h1 { color: var(--text-heading); font-size: 1.8rem; margin-bottom: 12px; }
+.meta { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 32px; }
+.content h2 { color: var(--text-heading); font-size: 1.3rem; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.content h3 { color: var(--blue); font-size: 1.1rem; margin: 24px 0 12px; }
+.content p { margin-bottom: 16px; color: var(--text); }
+.content ul { margin: 12px 0 16px 24px; color: var(--text); }
+.content code { background: var(--bg-secondary); padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 0.9rem; color: var(--orange); }
+.content pre {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+.content pre code { background: none; padding: 0; color: var(--text); }
+.back { display: inline-block; margin-bottom: 24px; color: var(--text-secondary); }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border-light); }
+th { color: var(--text-heading); font-weight: 600; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back">← 文档中心</a>
+<h1>📘 ContinualEdge 技术规范</h1>
+<div class="meta">v1.0-draft · 领域无关的端侧 Agent 运行时设计 · Jiaxin Luo</div>
+<div class="content">
+
+<h2>1. 设计原则</h2>
+<ul>
+<li><strong>领域无关（Domain-Agnostic）</strong>：Runtime 不感知具体业务，只管理 Domain Adapter 的生命周期；</li>
+<li><strong>离线优先（Offline-First）</strong>：所有核心功能在无网络环境下必须可用；</li>
+<li><strong>持续自适应（Continual Adaptation）</strong>：支持端侧增量学习与模型合并，无需回云端重训；</li>
+<li><strong>资源受限（Resource-Constrained）</strong>：目标设备内存 << 3GB，无 GPU，ARM Cortex-A53/A73。</li>
+</ul>
+
+<h2>2. 核心抽象</h2>
+
+<h3>2.1 Domain Adapter Card</h3>
+<p>每个任务域的标准化描述文件（JSON Schema）：</p>
+<pre><code>{
+  "$schema": "https://garrisonrom.dev/schemas/adapter-card-v1.json",
+  "domain_id": "string",           // 全局唯一标识
+  "domain_version": "1.0.0",       // 语义化版本
+  "fingerprint": {
+    "layer_stats": {               // 层-wise 统计指纹
+      "layer_{i}": {
+        "mean": [float],           // 维度 = hidden_size
+        "cov": [[float]],          // 维度 = hidden_size × hidden_size
+        "sample_count": int
+      }
+    },
+    "cka_signature": [float],      // 预计算的 CKA 对角线签名
+    "w2_signature": [float]        // 预计算的 W2 距离签名
+  },
+  "adapter_weights": {
+    "format": "gguf-lora",         // 仅支持 GGUF LoRA
+    "path": "string",              // 本地文件路径或远程 URL
+    "checksum": "sha256:...",      // 完整性校验
+    "size_bytes": int
+  },
+  "tool_registry": [               // 该 Domain 可用的工具列表
+    {
+      "tool_id": "string",
+      "description": "string",
+      "parameters": { /* JSON Schema */ },
+      "required_permissions": ["camera", "microphone", "location"]
+    }
+  ],
+  "training_stats": {
+    "samples_seen": int,
+    "last_updated": "ISO-8601",
+    "merge_count": int,
+    "parent_domains": ["domain_id"]  // 合并血缘追踪
+  },
+  "resource_quota": {
+    "max_memory_mb": int,          // Adapter 运行时内存上限
+    "max_compute_ms": int,         // 单次推理计算时限
+    "priority": int                // 调度优先级 1-10
+  }
+}</code></pre>
+
+<h3>2.2 Runtime API 接口</h3>
+<p>Android/Kotlin 层通过 JNI 调用 C++ Runtime 的核心 API：</p>
+<pre><code>// 初始化 Runtime
+CEStatus ceInit(CEConfig* config);
+
+// 加载 Domain Adapter
+CEStatus ceLoadAdapter(const char* domain_id, CEAdapterHandle* out);
+
+// 执行推理（自动调度最匹配的 Adapter）
+CEStatus ceInfer(const char* input_text, CEInferenceResult* out);
+
+// 触发端侧学习（Few-shot 微调）
+CEStatus ceLearn(const char* domain_id, CESample* samples, int n);
+
+// 执行 Adapter 合并（后台线程）
+CEStatus ceMerge(const char* domain_a, const char* domain_b, const char* new_domain_id);
+
+// 获取当前内存/功耗状态
+CEStatus ceGetStatus(CEStatusReport* out);</code></pre>
+
+<h2>3. 内存布局规范</h2>
+<p>目标设备：3GB RAM，可用约 1.5-2GB。</p>
+<table>
+<tr><th>区域</th><th>大小</th><th>说明</th></tr>
+<tr><td>Base Model 常驻区</td><td>2.1 GB</td><td>Phi-3-mini 4bit，mmap 加载，只读</td></tr>
+<tr><td>Adapter 缓存池</td><td>512 MB</td><td>LRU，最多 8 个 Adapter（每个 64MB）</td></tr>
+<tr><td>KV Cache</td><td>300 MB</td><td>fp16，最大序列 512 tokens</td></tr>
+<tr><td>梯度缓冲区</td><td>128 MB</td><td>端侧训练时动态分配</td></tr>
+<tr><td>交换区（Swap）</td><td>256 MB</td><td>冷 Adapter 序列化缓存</td></tr>
+<tr><td>系统保留</td><td>200 MB</td><td>Android OS + App 框架</td></tr>
+<tr><td><strong>总计</strong></td><td><strong>~3.5 GB</strong></td><td>通过 Swap 压缩实际物理内存 < 3GB</td></tr>
+</table>
+
+<h2>4. 端云同步协议</h2>
+
+<h3>4.1 差分更新（Delta Sync）</h3>
+<p>法规库/模型更新时，不推送全量，只传差异：</p>
+<pre><code>// 云端生成 delta
+{
+  "base_version": "1.2.0",
+  "target_version": "1.2.1",
+  "delta_format": "bsdiff",        // 或 zstd-dict
+  "delta_size": 204800,            // 200KB
+  "checksum": "sha256:...",
+  "chunks": [
+    {"offset": 1024, "data": "base64..."},
+    {"offset": 4096, "delete": 512}
+  ]
+}</code></pre>
+
+<h3>4.2 断点续传</h3>
+<ul>
+<li>模型分片：每片 5MB，带独立校验和；</li>
+<li>UploadID 机制：端侧持久化已传 Parts，重启后继续；</li>
+<li>幂等键：<code>{device_id}:{timestamp}:{random}</code>。</li>
+</ul>
+
+<h2>5. 安全规范</h2>
+<ul>
+<li><strong>传输</strong>：执法仪 ↔ 后端 mTLS 双向证书；</li>
+<li><strong>存储</strong>：照片 MinIO SSE-S3 加密，PG 敏感字段 AES-256-GCM；</li>
+<li><strong>证据链</strong>：每张照片 SHA-256，Event HMAC-SHA256 签名；</li>
+<li><strong>防伪</strong>：pHash 感知哈希检测重复上传；</li>
+<li><strong>JWT</strong>：技师 Token 短期（2h）+ Refresh（7d），设备指纹绑定（IMEI + SN）。</li>
+</ul>
+
+<h2>6. 领域适配指南（Domain Porting Guide）</h2>
+<p>新领域接入仅需四步：</p>
+<ol>
+<li><strong>定义 Domain</strong>：编写 <code>domain_config.json</code>（任务划分、法规源、工具列表）；</li>
+<li><strong>收集知识</strong>：下载公开法规 PDF，跑预处理脚本（PyPDF → 切分 → 向量化）；</li>
+<li><strong>训练初始 Adapter</strong>：云端用 50-100 条合成样本训 LoRA，导出 GGUF；</li>
+<li><strong>注册 Card</strong>：计算指纹，生成 Adapter Card，推送到端侧。</li>
+</ol>
+<p>预计工作量：<strong>2 周/领域</strong>。</p>
+
+</div>
+</body>
+</html>

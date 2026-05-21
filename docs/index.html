@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技术文档中心 | GarrisonRom</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="lang-zh">
+
+<nav>
+    <div class="container">
+        <a href="../index.html" class="logo">GarrisonRom</a>
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="projects.html"><span class="lang-zh">项目</span><span class="lang-en">Projects</span></a>
+            <a href="papers.html"><span class="lang-zh">论文</span><span class="lang-en">Papers</span></a>
+            <a href="tech-spec.html"><span class="lang-zh">技术文档</span><span class="lang-en">Tech Spec</span></a>
+            <a href="research-direction.html"><span class="lang-zh">研究方向</span><span class="lang-en">Research</span></a>
+            <a href="tech-stack.html"><span class="lang-zh">技术栈</span><span class="lang-en">Stack</span></a>
+        </div>
+        <div class="lang-switch">
+            <button onclick="setLang('zh')" class="active" id="btn-zh">中</button>
+            <button onclick="setLang('en')" id="btn-en">EN</button>
+        </div>
+    </div>
+</nav>
+
+<section class="hero" style="padding:60px 0 40px; text-align:center;">
+    <div class="container">
+        <h1 style="font-size:2rem; color:var(--text-heading); margin-bottom:12px;">
+            <span class="lang-zh">技术文档中心</span>
+            <span class="lang-en">Technical Documentation</span>
+        </h1>
+        <p style="color:var(--text-secondary); max-width:600px; margin:0 auto;">
+            <span class="lang-zh">系统架构、论文笔记、项目复盘、技术决策的完整记录。</span>
+            <span class="lang-en">System architecture, paper notes, project retrospectives, and technical decisions.</span>
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="card-grid">
+            <a href="projects.html" class="card" style="text-decoration:none; color:inherit;">
+                <h3>📁 项目文档</h3>
+                <p>ContinualEdge、智慧维保平台、AI for BCI 的详细设计文档与实现记录。</p>
+                <div class="meta"><span>Architecture</span><span>Design Docs</span></div>
+            </a>
+            <a href="papers.html" class="card" style="text-decoration:none; color:inherit;">
+                <h3>📄 论文档案</h3>
+                <p>ACL、ICML、KDD、ICLR、AAAI 等顶会论文的投稿版本、审稿意见与修改记录。</p>
+                <div class="meta"><span>Publications</span><span>Reviews</span></div>
+            </a>
+            <a href="tech-spec.html" class="card" style="text-decoration:none; color:inherit;">
+                <h3>📘 技术规范</h3>
+                <p>ContinualEdge Runtime 的完整技术规范：API 接口、数据格式、协议定义。</p>
+                <div class="meta"><span>Specification</span><span>Protocol</span></div>
+            </a>
+            <a href="research-direction.html" class="card" style="text-decoration:none; color:inherit;">
+                <h3>🔬 研究方向</h3>
+                <p>LLM Post-Training Adaptation 的五年规划：从持续学习到边缘智能。</p>
+                <div class="meta"><span>Roadmap</span><span>Vision</span></div>
+            </a>
+            <a href="tech-stack.html" class="card" style="text-decoration:none; color:inherit;">
+                <h3>🛠 技术栈</h3>
+                <p>完整的工具链、框架选型理由、版本锁定与迁移策略。</p>
+                <div class="meta"><span>Tools</span><span>Stack</span></div>
+            </a>
+            <a href="../admin/login.html" class="card" style="text-decoration:none; color:inherit;">
+                <h3>🔐 管理后台</h3>
+                <p>登录后可编辑学习心得、研究方向、技术栈等动态内容。</p>
+                <div class="meta"><span>Admin</span><span>Editable</span></div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>© GarrisonRom. Built with plain HTML/CSS.</p>
+    </div>
+</footer>
+
+<script>
+function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+</script>
+</body>
+</html>

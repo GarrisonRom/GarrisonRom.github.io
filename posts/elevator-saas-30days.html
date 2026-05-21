@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电梯 SaaS 30 天复盘 | GarrisonRom</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+h1 { color: var(--text-heading); font-size: 1.8rem; margin-bottom: 12px; }
+.meta { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 32px; }
+.content h2 { color: var(--text-heading); font-size: 1.3rem; margin: 32px 0 16px; }
+.content p { margin-bottom: 16px; color: var(--text); }
+.content ul { margin: 12px 0 16px 24px; color: var(--text); }
+.back { display: inline-block; margin-bottom: 24px; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<a href="../index.html" class="back">← 返回主页</a>
+<h1>电梯 SaaS 创业 30 天：从 0 到 Demo 的技术决策复盘</h1>
+<div class="meta">2026-04-20 · Engineering · Jiaxin Luo</div>
+<div class="content">
+
+<h2>背景</h2>
+<p>这是一个个人商业项目（非实验室课题），目标是为物业和维保公司提供法律风控级电梯维保 SaaS。技术栈：Kotlin Multiplatform（Android）+ Go 1.22（Fiber）+ PostgreSQL 16 + Redis + RabbitMQ + MinIO。</p>
+
+<h2>第一周：Clean Architecture + DDD</h2>
+<p>一开始决定用 Clean Architecture + DDD，现在回头看，对于一个人开发的 MVP 来说有些过度设计。但好处是：当我需要把离线队列模块拆成独立服务时，边界非常清晰。</p>
+<p>关键妥协：</p>
+<ul>
+<li>Go-Fiber 缺少成熟 ORM，暂定使用 sqlx + scany 手写 SQL；</li>
+<li>Event Sourcing 性能：PG 单表 events 预计月增 100 万行，需提前设计分区（按月份）；</li>
+<li>执法仪 Camera2 API 与 Compose 预览 Surface 兼容性问题，备选 TextureView。</li>
+</ul>
+
+<h2>第二周：Kotlin Compose + 执法仪集成</h2>
+<p>海康 DSJ-HIKN1A1 执法仪（Android 9.0，2.4 寸屏，3300mAh）。核心难点：</p>
+<ul>
+<li>屏幕适配 240×320 分辨率，按钮最小 44px；</li>
+<li>离线照片存储策略：SQLite 存元数据，本地文件系统存图片；</li>
+<li>海康 N1 拍照延迟约 300ms，需防抖处理；</li>
+<li>4G 流量敏感，照片压缩至 800KB 以下再上传。</li>
+</ul>
+
+<h2>第三周：VRPTW + Event Sourcing</h2>
+<p>VRPTW（带时间窗的车辆路径规划）算法 Go 库生态薄弱，最终妥协：用 Python 微服务（ortools）通过 gRPC 调用，Go 端只负责调度。</p>
+<p>Event Sourcing 一度让我陷入"为了审计而审计"的陷阱，后来简化为只记录关键业务事件：TaskCreated、PhotoUploaded、PropertyConfirmed。</p>
+
+<h2>第四周：联调与反作弊</h2>
+<p>反作弊机制：</p>
+<ul>
+<li>GPS 校验：维保地点与电梯注册坐标偏差 > 100 米触发预警；</li>
+<li>照片水印：设备 ID + 时间戳 + GPS 坐标合成不可见水印；</li>
+<li>时间校验：维保时长低于标准工时 50% 标记异常。</li>
+</ul>
+
+<h2>教训总结</h2>
+<ol>
+<li><strong>AI 生成 80% 样板代码，人工聚焦 20% 业务逻辑</strong>：水印合成、离线队列、执法仪通信协议；</li>
+<li><strong>范围严格锁定</strong>：不要碰预测性维护、不要碰 AI 诊断，只做流程数字化；</li>
+<li><strong>保密第一</strong>：代码仓库私有（Gitee），个人设备开发，个人域名演示，非学校 IP。</li>
+</ol>
+
+</div>
+</body>
+</html>

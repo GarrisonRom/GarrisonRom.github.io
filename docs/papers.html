@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文档案 | GarrisonRom</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+h1 { color: var(--text-heading); font-size: 1.8rem; margin-bottom: 12px; }
+.meta { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 32px; }
+.content h2 { color: var(--text-heading); font-size: 1.3rem; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.content h3 { color: var(--blue); font-size: 1.1rem; margin: 24px 0 12px; }
+.content p { margin-bottom: 16px; color: var(--text); }
+.back { display: inline-block; margin-bottom: 24px; color: var(--text-secondary); }
+.paper-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.paper-card h3 { color: var(--blue); margin-bottom: 8px; }
+.paper-card .venue { color: var(--green); font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+.paper-card .status { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; margin-bottom: 12px; }
+.status.accepted { background: rgba(59,185,80,0.15); color: var(--green); }
+.status.submitted { background: rgba(88,166,255,0.15); color: var(--blue); }
+.status.preparing { background: rgba(210,153,34,0.15); color: var(--yellow); }
+.paper-card p { color: var(--text-secondary); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back">← 文档中心</a>
+<h1>📄 论文档案</h1>
+<div class="meta">顶会投稿记录与审稿复盘 · Jiaxin Luo</div>
+<div class="content">
+
+<h2>已录取</h2>
+
+<div class="paper-card">
+  <h3>Revealing Procedural Reasoning Structures in Chain-of-Thought Training via Span-Level Gradient Organization</h3>
+  <div class="venue">ACL 2026 · Main Conference Poster</div>
+  <span class="status accepted">Accepted</span>
+  <p><strong>作者位次</strong>：二作（一作：刘嘉师姐）<br>
+  <strong>评分</strong>：Rating 8/10（Top 50% of accepted papers, clear accept）<br>
+  <strong>核心贡献</strong>：通过跨度级梯度组织揭示 CoT 训练中的程序推理结构。</p>
+</div>
+
+<div class="paper-card">
+  <h3>（ICML 2026 论文标题保密中）</h3>
+  <div class="venue">ICML 2026 · Regular Paper</div>
+  <span class="status accepted">Accepted</span>
+  <p><strong>作者位次</strong>：二作<br>
+  <strong>评分</strong>：4/4/4/4（四位审稿人全 4 分）<br>
+  <strong>状态</strong>：已正式录取。</p>
+</div>
+
+<div class="paper-card">
+  <h3>（KDD 2026 论文标题保密中）</h3>
+  <div class="venue">KDD 2026 · Research Track</div>
+  <span class="status accepted">Accepted</span>
+  <p><strong>作者位次</strong>：二作（与刘嘉师姐合作）<br>
+  <strong>状态</strong>：已正式录用。</p>
+</div>
+
+<div class="paper-card">
+  <h3>（TCE 论文标题）</h3>
+  <div class="venue">IEEE Transactions on Consumer Electronics</div>
+  <span class="status accepted">Accepted</span>
+  <p><strong>作者位次</strong>：二作<br>
+  <strong>状态</strong>：已录取。</p>
+</div>
+
+<h2>投稿中 / 准备中</h2>
+
+<div class="paper-card">
+  <h3>NeuroLoop: Data-Driven Virtual Subject Twinning for Physiology-Guided Rapid Calibration in Motor Imagery BCIs</h3>
+  <div class="venue">UbiComp/IMWUT 2026</div>
+  <span class="status submitted">Submitted</span>
+  <p><strong>作者位次</strong>：一作<br>
+  <strong>核心</strong>：基于 μ-SNR 生理表型匹配的 BCI 零梯度快速校准，16-shot 边缘部署。<br>
+  <strong>截稿</strong>：2026-08-02</p>
+</div>
+
+<div class="paper-card">
+  <h3>（AAAI 2027 冷启动自适应论文）</h3>
+  <div class="venue">AAAI 2027</div>
+  <span class="status preparing">Preparing</span>
+  <p><strong>作者位次</strong>：一作<br>
+  <strong>核心</strong>：延续 UbiComp 的冷启动工作，聚焦冷启动后的自适应策略。<br>
+  <strong>截稿</strong>：2026-07-28（距今约 2 个月）</p>
+</div>
+
+<div class="paper-card">
+  <h3>DomainFingerprintMerge: Manifold-Aware Task Merging for Continual LLMs</h3>
+  <div class="venue">ICLR 2027</div>
+  <span class="status preparing">Preparing</span>
+  <p><strong>作者位次</strong>：一作<br>
+  <strong>核心</strong>：基于表示空间几何指纹的 LoRA/Adapter 智能合并，无数据先验任务选择 + 分层合并。<br>
+  <strong>截稿</strong>：2026-09-28</p>
+</div>
+
+<h2>投稿策略复盘</h2>
+<p><strong>饱和打击计划（Saturation Bombing）</strong>：</p>
+<ul>
+<li>第一优先级：UbiComp/IMWUT（NeuroLoop 边缘部署，5 月截稿）</li>
+<li>必冲：NeurIPS 2026（Cross-subject Meta-Learning with Physiological Phenotyping，5 月截稿）</li>
+<li>备选：ICML 2027（MAML + Contrastive + Adapter，2027 年 1 月）</li>
+<li>策略性投稿：IEEE JBHI（NeuroLoop 医学长文版）</li>
+</ul>
+<p>目标：2026-2027 年度完成 10 篇顶会投稿，其中至少 3 篇一作。</p>
+
+</div>
+</body>
+</html>

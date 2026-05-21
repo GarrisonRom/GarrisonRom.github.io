@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | GarrisonRom</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body { max-width: 1100px; margin: 0 auto; padding: 24px; }
+h1 { color: var(--text-heading); font-size: 1.6rem; margin-bottom: 8px; }
+.meta { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 24px; }
+
+/* 顶部栏 */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.user-info { color: var(--text-secondary); font-size: 0.9rem; }
+
+/* 标签页 */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+.tab {
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.tab:hover { color: var(--text); }
+.tab.active {
+  background: var(--blue-dim);
+  color: var(--blue);
+  border-color: rgba(88,166,255,0.3);
+  font-weight: 600;
+}
+
+/* 编辑区 */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+
+.editor-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.editor-card h3 {
+  color: var(--text-heading);
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+.editor-card .hint {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+.editor-card textarea {
+  width: 100%;
+  min-height: 200px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--text);
+  font-family: "SF Mono", Monaco, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+}
+.editor-card textarea:focus { border-color: var(--blue); }
+.editor-card .actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.btn-sm {
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: none;
+}
+
+/* 预览区 */
+.preview-box {
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.preview-box h4 { color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 8px; }
+
+/* 状态提示 */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+  z-index: 1000;
+  display: none;
+  animation: slideIn 0.3s ease;
+}
+.toast.success { background: var(--green-btn); }
+.toast.error { background: var(--red); }
+@keyframes slideIn { from { transform: translateX(100px); opacity:0; } to { transform: translateX(0); opacity:1; } }
+
+/* 快速操作 */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.action-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+.action-btn:hover { border-color: var(--blue); }
+.action-btn strong { display: block; color: var(--text-heading); margin-bottom: 4px; }
+.action-btn span { font-size: 0.85rem; color: var(--text-secondary); }
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.logout-btn:hover { border-color: var(--red); color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>🔐 Admin Dashboard</h1>
+    <div class="meta">Manage your site content dynamically</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span class="user-info">Logged in as <strong id="display-user" style="color:var(--blue);">-</strong></span>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
+  </div>
+</div>
+
+<!-- 快速操作 -->
+<div class="quick-actions">
+  <button class="action-btn" onclick="switchTab('insights')">
+    <strong>📝 学习心得</strong>
+    <span>Edit learning insights & reflections</span>
+  </button>
+  <button class="action-btn" onclick="switchTab('research')">
+    <strong>🔬 研究方向</strong>
+    <span>Update research roadmap & vision</span>
+  </button>
+  <button class="action-btn" onclick="switchTab('stack')">
+    <strong>🛠 技术栈</strong>
+    <span>Modify tech stack & tool choices</span>
+  </button>
+  <button class="action-btn" onclick="switchTab('projects')">
+    <strong>📁 项目更新</strong>
+    <span>Update project status & milestones</span>
+  </button>
+  <button class="action-btn" onclick="switchTab('papers')">
+    <strong>📄 论文追踪</strong>
+    <span>Manage paper submissions & reviews</span>
+  </button>
+  <button class="action-btn" onclick="switchTab('settings')">
+    <strong>⚙ 站点设置</strong>
+    <span>Edit bio, social links, site config</span>
+  </button>
+</div>
+
+<!-- 标签页 -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('insights')" data-tab="insights">学习心得</div>
+  <div class="tab" onclick="switchTab('research')" data-tab="research">研究方向</div>
+  <div class="tab" onclick="switchTab('stack')" data-tab="stack">技术栈</div>
+  <div class="tab" onclick="switchTab('projects')" data-tab="projects">项目更新</div>
+  <div class="tab" onclick="switchTab('papers')" data-tab="papers">论文追踪</div>
+  <div class="tab" onclick="switchTab('settings')" data-tab="settings">站点设置</div>
+</div>
+
+<!-- 面板：学习心得 -->
+<div class="panel active" id="panel-insights">
+  <div class="editor-card">
+    <h3>学习心得列表</h3>
+    <p class="hint">每行一条，格式：日期 | 标题 | 摘要 | 链接（可选）。修改后保存即生效。</p>
+    <textarea id="insights-data" placeholder="2026-05-20 | ContinualEdge 设计复盘 | 端侧 Agent 运行时的关键决策 | posts/continual-edge-design.html
+2026-05-10 | 为什么选 LLM Post-Training | 从 BCI 到 LLM 的迁移洞察 | posts/why-llm-post-training.html"></textarea>
+    <div class="actions">
+      <button class="btn-sm btn-primary" onclick="saveData('insights')">💾 Save</button>
+      <button class="btn-sm btn-outline" onclick="loadDefault('insights')">↺ Reset Default</button>
+      <button class="btn-sm btn-outline" onclick="previewData('insights')">👁 Preview</button>
+    </div>
+    <div class="preview-box" id="preview-insights" style="display:none;">
+      <h4>Preview</h4>
+      <div id="preview-insights-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 面板：研究方向 -->
+<div class="panel" id="panel-research">
+  <div class="editor-card">
+    <h3>研究方向概述</h3>
+    <p class="hint">支持 Markdown 语法。修改后主页和文档中心会自动同步。</p>
+    <textarea id="research-data" placeholder="# 核心命题
+如何让大语言模型在部署后持续适应动态环境...
+
+## 五个子方向
+1. 持续学习...
+2. 测试时适应..."></textarea>
+    <div class="actions">
+      <button class="btn-sm btn-primary" onclick="saveData('research')">💾 Save</button>
+      <button class="btn-sm btn-outline" onclick="loadDefault('research')">↺ Reset Default</button>
+    </div>
+  </div>
+</div>
+
+<!-- 面板：技术栈 -->
+<div class="panel" id="panel-stack">
+  <div class="editor-card">
+    <h3>技术栈 JSON</h3>
+    <p class="hint">JSON 格式，分类存储。修改后保存即生效。</p>
+    <textarea id="stack-data" placeholder='{
+  "deep_learning": [{"name":"PyTorch","version":"2.2+","reason":"生态最完善"}],
+  "backend": [...]
+}'></textarea>
+    <div class="actions">
+      <button class="btn-sm btn-primary" onclick="saveData('stack')">💾 Save</button>
+      <button class="btn-sm btn-outline" onclick="loadDefault('stack')">↺ Reset Default</button>
+    </div>
+  </div>
+</div>
+
+<!-- 面板：项目更新 -->
+<div class="panel" id="panel-projects">
+  <div class="editor-card">
+    <h3>项目状态</h3>
+    <p class="hint">JSON 格式，包含项目名称、状态、技术栈、里程碑。</p>
+    <textarea id="projects-data"></textarea>
+    <div class="actions">
+      <button class="btn-sm btn-primary" onclick="saveData('projects')">💾 Save</button>
+      <button class="btn-sm btn-outline" onclick="loadDefault('projects')">↺ Reset Default</button>
+    </div>
+  </div>
+</div>
+
+<!-- 面板：论文追踪 -->
+<div class="panel" id="panel-papers">
+  <div class="editor-card">
+    <h3>论文列表</h3>
+    <p class="hint">JSON 格式，包含标题、会议、状态、作者位次、评分。</p>
+    <textarea id="papers-data"></textarea>
+    <div class="actions">
+      <button class="btn-sm btn-primary" onclick="saveData('papers')">💾 Save</button>
+      <button class="btn-sm btn-outline" onclick="loadDefault('papers')">↺ Reset Default</button>
+    </div>
+  </div>
+</div>
+
+<!-- 面板：站点设置 -->
+<div class="panel" id="panel-settings">
+  <div class="editor-card">
+    <h3>站点配置</h3>
+    <p class="hint">JSON 格式：bio、subtitle、social links、导航项等。</p>
+    <textarea id="settings-data"></textarea>
+    <div class="actions">
+      <button class="btn-sm btn-primary" onclick="saveData('settings')">💾 Save</button>
+      <button class="btn-sm btn-outline" onclick="loadDefault('settings')">↺ Reset Default</button>
+    </div>
+  </div>
+  <div class="editor-card">
+    <h3>导出 / 导入</h3>
+    <p class="hint">将所有 localStorage 数据导出为 JSON 备份，或导入恢复。</p>
+    <div class="actions">
+      <button class="btn-sm btn-primary" onclick="exportAll()">📤 Export All Data</button>
+      <button class="btn-sm btn-outline" onclick="document.getElementById('import-file').click()">📥 Import Data</button>
+      <input type="file" id="import-file" style="display:none" accept=".json" onchange="importAll(this)">
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===================== 权限检查 =====================
+function checkAuth() {
+  const token = localStorage.getItem('gr_token');
+  const user = localStorage.getItem('gr_user');
+  if (!token || !user) {
+    window.location.href = 'login.html';
+    return false;
+  }
+  // 简单检查 token 是否过期（24h）
+  try {
+    const payload = JSON.parse(atob(token));
+    if (payload.exp < Date.now()) {
+      localStorage.removeItem('gr_token');
+      localStorage.removeItem('gr_user');
+      window.location.href = 'login.html';
+      return false;
+    }
+  } catch(e) {
+    window.location.href = 'login.html';
+    return false;
+  }
+  document.getElementById('display-user').textContent = user;
+  return true;
+}
+
+function doLogout() {
+  localStorage.removeItem('gr_token');
+  localStorage.removeItem('gr_user');
+  window.location.href = 'login.html';
+}
+
+// ===================== 默认数据 =====================
+const DEFAULTS = {
+  insights: `2026-05-20 | ContinualEdge 系统设计复盘 | 端侧 Agent 运行时的关键决策与架构权衡 | posts/continual-edge-design.html
+2026-05-10 | 为什么我选择 LLM Post-Training | 从 BCI 到 LLM 的迁移洞察 | posts/why-llm-post-training.html
+2026-04-20 | 电梯 SaaS 创业 30 天 | Clean Architecture 在快速迭代中的利弊 | posts/elevator-saas-30days.html
+2026-04-15 | ICLR 2027 工作笔记 | DomainFingerprintMerge 的算法细节与实现陷阱 | posts/iclr-domain-fingerprint.html
+2026-03-26 | NeuroLoop BCI 研究 | 基于生理表型的跨被试自适应方法 | posts/neuro-loop-bci.html`,
+
+  research: `# 核心命题
+如何让大语言模型在部署后持续适应动态环境，同时保持基础能力不遗忘？
+
+## 五个子方向
+1. **持续学习（Continual Learning）**：模型如何顺序学习多个任务而不遗忘旧能力
+2. **测试时适应（Test-Time Adaptation）**：在推理阶段利用无标签测试数据实时调整模型
+3. **在线强化学习（Online RLHF/DPO）**：根据用户实时反馈持续优化对齐
+4. **参数高效微调（PEFT/Adapter/MoE）**：用最少参数实现最大适应
+5. **模型编辑与知识更新（Model Editing）**：精确修改模型中的特定知识而不影响其他能力
+
+## 五年路线图
+- **Year 1 (2026-2027)**：算法奠基，3 篇一作顶会
+- **Year 2 (2027-2028)**：系统下沉，ContinualEdge 开源
+- **Year 3 (2028-2029)**：应用扩展，3+ 行业验证
+- **Year 4-5 (2029-2031)**：理论突破，博士毕业`,
+
+  stack: JSON.stringify({
+    deep_learning: [
+      {name:"PyTorch", version:"2.2+", reason:"生态最完善，动态图调试友好"},
+      {name:"Hugging Face Transformers", version:"4.38+", reason:"标准接口，PEFT 兼容"},
+      {name:"PEFT", version:"0.9+", reason:"官方 LoRA/Adapter 实现"},
+      {name:"llama.cpp", version:"b2800+", reason:"ARM NEON 优化最成熟"}
+    ],
+    backend: [
+      {name:"Go", version:"1.22+", reason:"编译快、goroutine 并发"},
+      {name:"Fiber", version:"v3", reason:"Express-like API，性能 top"},
+      {name:"PostgreSQL", version:"16", reason:"JSONB/PostGIS/时序"}
+    ],
+    mobile: [
+      {name:"Kotlin", version:"1.9+", reason:"空安全、协程、Compose"},
+      {name:"Jetpack Compose", version:"2024.02+", reason:"声明式 UI"}
+    ]
+  }, null, 2),
+
+  projects: JSON.stringify([
+    {
+      name: "ContinualEdge",
+      status: "架构设计完成",
+      stack: ["Kotlin", "Go", "llama.cpp", "Phi-3-mini"],
+      milestones: [
+        {date:"2026-06-01", task:"llama.cpp Adapter 热切换"},
+        {date:"2026-08-02", task:"UbiComp 投稿"}
+      ]
+    },
+    {
+      name: "智慧维保平台",
+      status: "MVP 完成，试运营",
+      stack: ["Go", "Kotlin", "PostgreSQL", "MinIO"],
+      milestones: [
+        {date:"2026-04-20", task:"Demo 完成"},
+        {date:"2026-05-20", task:"接入 ContinualEdge 语音模块"}
+      ]
+    },
+    {
+      name: "AI for BCI (NeuroLoop)",
+      status: "UbiComp 已投稿",
+      stack: ["Python", "PyTorch", "MNE", "MOABB"],
+      milestones: [
+        {date:"2026-03-26", task:"核心 Idea 确立"},
+        {date:"2026-05-01", task:"UbiComp 投稿"}
+      ]
+    }
+  ], null, 2),
+
+  papers: JSON.stringify([
+    {title:"Revealing Procedural Reasoning Structures in CoT Training", venue:"ACL 2026", status:"Accepted", author:"2nd", rating:"8/10"},
+    {title:"(ICML 2026)", venue:"ICML 2026", status:"Accepted", author:"2nd", rating:"4/4/4/4"},
+    {title:"(KDD 2026)", venue:"KDD 2026", status:"Accepted", author:"2nd", rating:"-"},
+    {title:"NeuroLoop: Virtual Subject Twinning for BCI", venue:"UbiComp/IMWUT", status:"Submitted", author:"1st", rating:"-"},
+    {title:"DomainFingerprintMerge", venue:"ICLR 2027", status:"Preparing", author:"1st", rating:"-"}
+  ], null, 2),
+
+  settings: JSON.stringify({
+    name: "罗嘉鑫 / Jiaxin Luo",
+    subtitle: "华南理工大学 · 计算机博0 · AI & BCI",
+    bio_zh: "研究方向聚焦大模型后训练适应（LLM Post-Training Adaptation），参与 AI 与脑机接口（BCI）的交叉领域。",
+    bio_en: "Researching LLM Post-Training Adaptation & Brain-Computer Interfaces.",
+    github: "https://github.com/GarrisonRom",
+    email: "csljx1127@mail.scut.edu.cn"
+  }, null, 2)
+};
+
+// ===================== 数据操作 =====================
+function loadData(key) {
+  const saved = localStorage.getItem('gr_' + key);
+  return saved !== null ? saved : DEFAULTS[key];
+}
+
+function saveData(key) {
+  const val = document.getElementById(key + '-data').value;
+  localStorage.setItem('gr_' + key, val);
+  showToast('Saved successfully!', 'success');
+}
+
+function loadDefault(key) {
+  if (!confirm('Reset to default? This will overwrite current data.')) return;
+  document.getElementById(key + '-data').value = DEFAULTS[key];
+  localStorage.setItem('gr_' + key, DEFAULTS[key]);
+  showToast('Reset to default.', 'success');
+}
+
+function previewData(key) {
+  const val = document.getElementById(key + '-data').value;
+  const box = document.getElementById('preview-' + key);
+  const content = document.getElementById('preview-' + key + '-content');
+  box.style.display = 'block';
+  // 简单解析：日期 | 标题 | 摘要 | 链接
+  const lines = val.trim().split('\n').filter(l => l.trim());
+  let html = '<ul style="margin-left:16px; color:var(--text);">';
+  for (const line of lines) {
+    const parts = line.split('|').map(p => p.trim());
+    if (parts.length >= 3) {
+      const link = parts[3] || '#';
+      html += `<li style="margin-bottom:8px;"><strong>${parts[1]}</strong> <span style="color:var(--text-secondary); font-size:0.85rem;">(${parts[0]})</span><br><span style="font-size:0.9rem;">${parts[2]}</span> <a href="${link}" style="font-size:0.85rem;">→</a></li>`;
+    }
+  }
+  html += '</ul>';
+  content.innerHTML = html;
+}
+
+// ===================== 标签切换 =====================
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab));
+}
+
+// ===================== 导出导入 =====================
+function exportAll() {
+  const data = {};
+  for (const key of Object.keys(DEFAULTS)) {
+    data[key] = localStorage.getItem('gr_' + key) || DEFAULTS[key];
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'garrisonrom-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Exported!', 'success');
+}
+
+function importAll(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      for (const [key, val] of Object.entries(data)) {
+        if (DEFAULTS.hasOwnProperty(key)) {
+          localStorage.setItem('gr_' + key, val);
+        }
+      }
+      initEditors();
+      showToast('Imported successfully!', 'success');
+    } catch(err) {
+      showToast('Import failed: invalid JSON', 'error');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// ===================== UI 辅助 =====================
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+function initEditors() {
+  for (const key of Object.keys(DEFAULTS)) {
+    const el = document.getElementById(key + '-data');
+    if (el) el.value = loadData(key);
+  }
+}
+
+// ===================== 启动 =====================
+if (!checkAuth()) {
+  // 未登录，checkAuth 已处理跳转
+} else {
+  initEditors();
+}
+</script>
+
+</body>
+</html>

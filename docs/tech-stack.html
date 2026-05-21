@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技术栈 | GarrisonRom</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+h1 { color: var(--text-heading); font-size: 1.8rem; margin-bottom: 12px; }
+.meta { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 32px; }
+.content h2 { color: var(--text-heading); font-size: 1.3rem; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.content h3 { color: var(--blue); font-size: 1.1rem; margin: 24px 0 12px; }
+.content p { margin-bottom: 16px; color: var(--text); }
+.content ul { margin: 12px 0 16px 24px; color: var(--text); }
+.back { display: inline-block; margin-bottom: 24px; color: var(--text-secondary); }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border-light); }
+th { color: var(--text-heading); font-weight: 600; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back">← 文档中心</a>
+<h1>🛠 技术栈</h1>
+<div class="meta">完整工具链、框架选型理由、版本锁定 · Jiaxin Luo</div>
+<div class="content">
+
+<h2>深度学习 / LLM</h2>
+<table>
+<tr><th>工具</th><th>版本</th><th>用途</th><th>选型理由</th></tr>
+<tr><td>PyTorch</td><td>2.2+</td><td>模型训练</td><td>生态最完善，动态图调试友好</td></tr>
+<tr><td>Hugging Face Transformers</td><td>4.38+</td><td>模型加载/推理</td><td>标准接口，PEFT 兼容</td></tr>
+<tr><td>PEFT</td><td>0.9+</td><td>LoRA/Adapter 训练</td><td>官方实现，与 Transformers 无缝集成</td></tr>
+<tr><td>llama.cpp</td><td>b2800+</td><td>端侧推理</td><td>ARM NEON 优化最成熟，GGUF 生态标准</td></tr>
+<tr><td>vLLM</td><td>0.4+</td><td>云端批量推理</td><td>PagedAttention，高吞吐</td></tr>
+<tr><td>DeepSpeed</td><td>0.13+</td><td>分布式训练</td><td>ZeRO 优化，大模型必备</td></tr>
+</table>
+
+<h2>后端 / 系统</h2>
+<table>
+<tr><th>工具</th><th>版本</th><th>用途</th><th>选型理由</th></tr>
+<tr><td>Go</td><td>1.22+</td><td>后端 API</td><td>编译快、goroutine 并发、部署简单</td></tr>
+<tr><td>Fiber</td><td>v3</td><td>Web 框架</td><td>Express-like API，性能 top</td></tr>
+<tr><td>sqlx + scany</td><td>latest</td><td>数据库访问</td><td>手写 SQL 可控，比 GORM 透明</td></tr>
+<tr><td>PostgreSQL</td><td>16</td><td>主数据库</td><td>JSONB/PostGIS/时序，功能全面</td></tr>
+<tr><td>Redis</td><td>7.2</td><td>缓存 + 分布式锁</td><td>Geo 坐标计算、Rate Limit</td></tr>
+<tr><td>RabbitMQ</td><td>3.13</td><td>消息队列</td><td>CQRS/Event Sourcing 基础</td></tr>
+<tr><td>MinIO</td><td>RELEASE.2024</td><td>对象存储</td><td>S3 兼容，证据链存储</td></tr>
+<tr><td>Docker Compose</td><td>2.24+</td><td>部署</td><td>P0 阶段单节点足够</td></tr>
+</table>
+
+<h2>移动端 / 边缘</h2>
+<table>
+<tr><th>工具</th><th>版本</th><th>用途</th><th>选型理由</th></tr>
+<tr><td>Kotlin</td><td>1.9+</td><td>Android 开发</td><td>空安全、协程、Jetpack Compose</td></tr>
+<tr><td>Jetpack Compose</td><td>2024.02+</td><td>UI 框架</td><td>声明式 UI，2.4 寸屏适配容易</td></tr>
+<tr><td>Camera2 API</td><td>-</td><td>拍照/录像</td><td>细粒度控制，支持 YUV 流</td></tr>
+<tr><td>WorkManager</td><td>2.9+</td><td>后台任务</td><td>约束感知（充电+WiFi 时上传）</td></tr>
+<tr><td>ONNX Runtime Mobile</td><td>1.17+</td><td>端侧 ML 推理</td><td>跨平台，支持 NNAPI</td></tr>
+</table>
+
+<h2>数据 / 评测</h2>
+<table>
+<tr><th>工具</th><th>版本</th><th>用途</th><th>选型理由</th></tr>
+<tr><td>MOABB</td><td>1.0+</td><td>BCI 基准测试</td><td>标准 EEG 数据集与协议</td></tr>
+<tr><td>MNE</td><td>1.6+</td><td>EEG 信号处理</td><td>Python 生态最完善</td></tr>
+<tr><td>SuperNI</td><td>-</td><td>LLM 持续学习评测</td><td>8 领域指令数据</td></tr>
+<tr><td>VTAB-1k</td><td>-</td><td>视觉迁移评测</td><td>19 任务，标准基准</td></tr>
+</table>
+
+<h2>开发工具</h2>
+<table>
+<tr><th>工具</th><th>用途</th></tr>
+<tr><td>Trae (AI IDE)</td><td>主力开发，Claude 3.7 辅助</td></tr>
+<tr><td>Cursor</td><td>复杂重构时备用</td></tr>
+<tr><td>Android Studio</td><td>Kotlin 开发 + 模拟器</td></tr>
+<tr><td>Git + Gitee</td><td>版本控制（国内速度快）</td></tr>
+<tr><td>AutoDL</td><td>云端 GPU 训练（RTX 3090）</td></tr>
+</table>
+
+<h2>版本锁定策略</h2>
+<ul>
+<li><strong>Go 模块</strong>：go.mod 精确到 patch 版本；</li>
+<li><strong>Python</strong>：requirements.txt + conda env 导出；</li>
+<li><strong>Docker</strong>：镜像 tag 精确到 digest，不用 latest；</li>
+<li><strong>模型</strong>：GGUF 文件记录 sha256，防止 OTA 更新后行为不一致。</li>
+</ul>
+
+</div>
+</body>
+</html>
