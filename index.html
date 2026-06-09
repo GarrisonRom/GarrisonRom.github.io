@@ -3,215 +3,812 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GarrisonRom | Tech Blog</title>
+    <title>Jiaxin Luo (罗嘉鑫) | AI Researcher & Engineer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="lang-zh">
+<body class="lang-en">
 
-<nav>
-    <div class="container">
-        <a href="index.html" class="logo">GarrisonRom</a>
+<!-- 导航 -->
+<nav id="navbar">
+    <div class="container nav-container">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">JL</span>
+            <span class="logo-text">Xavier Luo</span>
+        </a>
         <div class="nav-links">
-            <a href="index.html#about"><span class="lang-zh">关于</span><span class="lang-en">About</span></a>
-            <a href="index.html#skills"><span class="lang-zh">技能</span><span class="lang-en">Skills</span></a>
-            <a href="index.html#projects"><span class="lang-zh">项目</span><span class="lang-en">Projects</span></a>
-            <a href="index.html#papers"><span class="lang-zh">学术</span><span class="lang-en">Research</span></a>
-            <a href="index.html#posts"><span class="lang-zh">文章</span><span class="lang-en">Posts</span></a>
-            <a href="docs/index.html"><span class="lang-zh">文档</span><span class="lang-en">Docs</span></a>
-            <a href="admin/login.html">Admin</a>
+            <a href="#about" class="nav-link active"><span class="lang-zh">关于</span><span class="lang-en">About</span></a>
+            <a href="#education" class="nav-link"><span class="lang-zh">教育</span><span class="lang-en">Education</span></a>
+            <a href="#research" class="nav-link"><span class="lang-zh">科研</span><span class="lang-en">Research</span></a>
+            <a href="#publications" class="nav-link"><span class="lang-zh">论文</span><span class="lang-en">Publications</span></a>
+            <a href="#projects" class="nav-link"><span class="lang-zh">项目</span><span class="lang-en">Projects</span></a>
+            <a href="#experience" class="nav-link"><span class="lang-zh">经历</span><span class="lang-en">Experience</span></a>
+            <a href="#skills" class="nav-link"><span class="lang-zh">技能</span><span class="lang-en">Skills</span></a>
+            <a href="#posts" class="nav-link"><span class="lang-zh">博客</span><span class="lang-en">Blog</span></a>
         </div>
-        <div class="lang-switch">
-            <button onclick="setLang('zh')" class="active" id="btn-zh">中</button>
-            <button onclick="setLang('en')" id="btn-en">EN</button>
+        <div class="nav-right">
+            <div class="lang-switch">
+                <button onclick="setLang('zh')" id="btn-zh">中</button>
+                <button onclick="setLang('en')" class="active" id="btn-en">EN</button>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
         </div>
     </div>
 </nav>
 
-<section class="hero" id="about" style="padding:70px 0 50px; text-align:center;">
-    <div class="container">
-        <div style="width:110px; height:110px; border-radius:50%; background:linear-gradient(135deg, #58a6ff, #238636); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:2.2rem; color:white; font-weight:700;">G</div>
-        <h1 style="font-size:2.2rem; margin-bottom:10px; color:#f0f6fc;">
-            <span class="lang-zh">罗嘉鑫</span>
-            <span class="lang-en">Jiaxin Luo (Xavier)</span>
-        </h1>
-        <p style="font-size:1.05rem; color:#8b949e; margin-bottom:16px;">
+<!-- 移动端菜单 -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="toggleMobileMenu()"><span class="lang-zh">关于</span><span class="lang-en">About</span></a>
+    <a href="#education" onclick="toggleMobileMenu()"><span class="lang-zh">教育</span><span class="lang-en">Education</span></a>
+    <a href="#research" onclick="toggleMobileMenu()"><span class="lang-zh">科研</span><span class="lang-en">Research</span></a>
+    <a href="#publications" onclick="toggleMobileMenu()"><span class="lang-zh">论文</span><span class="lang-en">Publications</span></a>
+    <a href="#projects" onclick="toggleMobileMenu()"><span class="lang-zh">项目</span><span class="lang-en">Projects</span></a>
+    <a href="#experience" onclick="toggleMobileMenu()"><span class="lang-zh">经历</span><span class="lang-en">Experience</span></a>
+    <a href="#skills" onclick="toggleMobileMenu()"><span class="lang-zh">技能</span><span class="lang-en">Skills</span></a>
+    <a href="#posts" onclick="toggleMobileMenu()"><span class="lang-zh">博客</span><span class="lang-en">Blog</span></a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="about">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="particles"></div>
+    <div class="container hero-content">
+        <div class="hero-badge">
+            <span class="badge-dot"></span>
             <span class="lang-zh">华南理工大学 · 计算机博0 · AI & BCI</span>
-            <span class="lang-en">SCUT · CS PhD · AI & BCI</span>
+            <span class="lang-en">SCUT · CS PhD Student · AI & BCI</span>
+        </div>
+        <h1 class="hero-title">
+            <span class="lang-zh">罗嘉鑫</span>
+            <span class="lang-en">Xavier Luo (Jiaxin Luo)</span>
+        </h1>
+        <p class="hero-subtitle">
+            <span class="lang-zh">人工智能研究员 & 全栈工程师</span>
+            <span class="lang-en">AI Researcher & Full-Stack Engineer</span>
         </p>
-        <p style="max-width:600px; margin:0 auto; color:#8b949e; font-size:0.95rem;">
+        <p class="hero-motto">
+            <span class="lang-zh">学习和自律是贯彻人生的始终，路阻且长，道阻且怨</span>
+            <span class="lang-en">Learning and self-discipline endure throughout life; the path is long and arduous, the journey fraught with trials</span>
+        </p>
+        <p class="hero-desc">
             <span class="lang-zh">
-                研究方向：LLM Post-Training Adaptation（持续学习 / 测试时适应 / 模型合并）。<br>
-                同时探索 AI × 脑机接口（BCI）的跨域自适应。相信好的技术应该被清晰地表达。
+                研究方向聚焦<strong>大语言模型后训练适应</strong>：持续学习、测试时适应、参数高效微调与模型合并。<br>
+                同时探索 <strong>AI × 脑机接口（BCI）</strong> 的跨域自适应，致力于推动大模型在边缘设备与产业场景的部署。<br>
+                相信好的技术应该被清晰地表达。
             </span>
             <span class="lang-en">
-                Research: LLM Post-Training Adaptation (Continual Learning / Test-Time Adaptation / Model Merging).<br>
-                Also exploring AI × Brain-Computer Interfaces. Good technology deserves clear expression.
+                Research focuses on <strong>LLM Post-Training Adaptation</strong>: Continual Learning, Test-Time Adaptation, Parameter-Efficient Fine-Tuning, and Model Merging.<br>
+                Also exploring <strong>AI × Brain-Computer Interfaces (BCI)</strong> cross-domain adaptation, dedicated to enabling deployment of large models on edge devices and industrial scenarios.<br>
+                Good technology deserves clear expression.
             </span>
         </p>
-        <div style="margin-top:24px;">
-            <a href="https://github.com/GarrisonRom" class="btn btn-primary" target="_blank">GitHub</a>
-            <a href="mailto:csljx1127@mail.scut.edu.cn" class="btn btn-outline" style="margin-left:8px;">
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-num">4</span>
+                <span class="stat-label"><span class="lang-zh">顶会论文</span><span class="lang-en">Top Papers</span></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">3</span>
+                <span class="stat-label"><span class="lang-zh">在投/在研</span><span class="lang-en">In Progress</span></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">1</span>
+                <span class="stat-label"><span class="lang-zh">专利</span><span class="lang-en">Patent</span></span>
+            </div>
+        </div>
+        <div class="hero-actions">
+            <a href="https://github.com/GarrisonRom" class="btn btn-primary" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+            </a>
+            <a href="mailto:csljx1127@mail.scut.edu.cn" class="btn btn-outline">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 <span class="lang-zh">联系我</span><span class="lang-en">Contact</span>
+            </a>
+            <a href="docs/index.html" class="btn btn-ghost">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span class="lang-zh">文档中心</span><span class="lang-en">Docs</span>
             </a>
         </div>
     </div>
-</section>
-
-<section class="section" id="skills">
-    <div class="container">
-        <h2 class="section-title"><span class="lang-zh">技术栈</span><span class="lang-en">Tech Stack</span></h2>
-        <div class="skills">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">PyTorch</span>
-            <span class="skill-tag">Go</span>
-            <span class="skill-tag">Kotlin</span>
-            <span class="skill-tag">Deep Learning</span>
-            <span class="skill-tag">BCI / EEG</span>
-            <span class="skill-tag">LLM Fine-tuning</span>
-            <span class="skill-tag">PEFT / LoRA</span>
-            <span class="skill-tag">Model Merging</span>
-            <span class="skill-tag">Edge AI</span>
-            <span class="skill-tag">Docker</span>
-            <span class="skill-tag">PostgreSQL</span>
-            <span class="skill-tag">Event Sourcing</span>
-            <span class="skill-tag">Git</span>
+    <div class="scroll-indicator">
+        <div class="scroll-mouse">
+            <div class="scroll-wheel"></div>
         </div>
     </div>
 </section>
 
-<section class="section" id="projects">
+<!-- 教育经历 -->
+<section class="section" id="education">
     <div class="container">
-        <h2 class="section-title"><span class="lang-zh">项目</span><span class="lang-en">Projects</span></h2>
-        <div class="card-grid">
-            <div class="card">
-                <h3>🧠 AI for BCI</h3>
-                <p>
-                    <span class="lang-zh">NeuroLoop：基于生理表型匹配的 BCI 零梯度快速校准系统，将新用户校准数据从 200 trials 降至 16-shot。</span>
-                    <span class="lang-en">NeuroLoop: Zero-gradient rapid BCI calibration via physiological phenotyping, reducing calibration from 200 trials to 16-shot.</span>
-                </p>
-                <div class="meta"><span>Python</span><span>PyTorch</span><span>EEG</span><span>MOABB</span></div>
+        <div class="section-header">
+            <span class="section-tag">Education</span>
+            <h2 class="section-title"><span class="lang-zh">教育经历</span><span class="lang-en">Education</span></h2>
+        </div>
+        <div class="edu-timeline">
+            <div class="edu-item active">
+                <div class="edu-marker">
+                    <div class="edu-dot"></div>
+                    <div class="edu-line"></div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-header">
+                        <div class="edu-school">
+                            <span class="lang-zh">华南理工大学</span>
+                            <span class="lang-en">South China University of Technology</span>
+                        </div>
+                        <span class="edu-badge current">
+                            <span class="lang-zh">在读</span><span class="lang-en">Current</span>
+                        </span>
+                    </div>
+                    <div class="edu-degree">
+                        <span class="lang-zh">博士研究生（硕博连读）· 计算机科学与技术</span>
+                        <span class="lang-en">Ph.D. in Computer Science (Master-PhD Combined Program)</span>
+                    </div>
+                    <div class="edu-time">2026.09 — 2030.06</div>
+                    <div class="edu-detail">
+                        <span class="lang-zh">研究方向：大语言模型后训练适应（LLM Post-Training Adaptation）</span>
+                        <span class="lang-en">Research: LLM Post-Training Adaptation</span>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>⚡ ContinualEdge</h3>
-                <p>
-                    <span class="lang-zh">端侧持续自适应 Agent 运行时。支持多 Domain 动态调度、Adapter 热切换、端侧增量学习与自动合并。电梯维保为首场景验证。</span>
-                    <span class="lang-en">Continual learning runtime for edge LLM agents. Multi-domain scheduling, hot-swappable adapters, on-device fine-tuning & auto-merging. First validated in elevator maintenance.</span>
-                </p>
-                <div class="meta"><span>Kotlin</span><span>Go</span><span>llama.cpp</span><span>Android</span></div>
+            <div class="edu-item">
+                <div class="edu-marker">
+                    <div class="edu-dot"></div>
+                    <div class="edu-line"></div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-header">
+                        <div class="edu-school">
+                            <span class="lang-zh">华南理工大学</span>
+                            <span class="lang-en">South China University of Technology</span>
+                        </div>
+                        <span class="edu-badge">
+                            <span class="lang-zh">硕博连读</span><span class="lang-en">Combined</span>
+                        </span>
+                    </div>
+                    <div class="edu-degree">
+                        <span class="lang-zh">硕士研究生 · 计算机科学与技术（硕博连读）</span>
+                        <span class="lang-en">M.S. in Computer Science (Master-PhD Combined Program)</span>
+                    </div>
+                    <div class="edu-time">2024.09 — 2026.06</div>
+                </div>
             </div>
-            <div class="card">
-                <h3>🔧 智慧维保平台</h3>
+            <div class="edu-item">
+                <div class="edu-marker">
+                    <div class="edu-dot"></div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-header">
+                        <div class="edu-school">
+                            <span class="lang-zh">华南理工大学</span>
+                            <span class="lang-en">South China University of Technology</span>
+                        </div>
+                        <span class="edu-badge">
+                            <span class="lang-zh">本科</span><span class="lang-en">Bachelor</span>
+                        </span>
+                    </div>
+                    <div class="edu-degree">
+                        <span class="lang-zh">本科 · 数学学院</span>
+                        <span class="lang-en">B.S. in Mathematics</span>
+                    </div>
+                    <div class="edu-time">2020.09 — 2024.06</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 研究兴趣 -->
+<section class="section section-alt" id="research">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Research</span>
+            <h2 class="section-title"><span class="lang-zh">研究兴趣</span><span class="lang-en">Research Interests</span></h2>
+        </div>
+        <div class="research-grid">
+            <div class="research-card">
+                <div class="research-icon">🧠</div>
+                <h3>LLM Post-Training Adaptation</h3>
                 <p>
+                    <span class="lang-zh">大语言模型后训练适应：持续学习、测试时适应、参数高效微调与模型合并。关注预训练模型在动态环境下的持续适应与多任务参数合并。</span>
+                    <span class="lang-en">Continual Learning, Test-Time Adaptation, Parameter-Efficient Fine-Tuning, and Model Merging. Focus on continuous adaptation and multi-task parameter merging in dynamic environments.</span>
+                </p>
+                <div class="research-tags">
+                    <span>Continual Learning</span>
+                    <span>Test-Time Adaptation</span>
+                    <span>LoRA</span>
+                    <span>Model Merging</span>
+                </div>
+            </div>
+            <div class="research-card">
+                <div class="research-icon">⚡</div>
+                <h3>
+                    <span class="lang-zh">边缘智能部署</span>
+                    <span class="lang-en">Edge AI Deployment</span>
+                </h3>
+                <p>
+                    <span class="lang-zh">致力于推动大模型在边缘设备与产业场景的低成本、高实时性部署。端侧增量学习、Adapter 热切换、自动合并与端云协同。</span>
+                    <span class="lang-en">Dedicated to enabling low-cost, real-time deployment of large models on edge devices and industrial scenarios. On-device incremental learning, hot-swappable adapters, auto-merging, and edge-cloud collaboration.</span>
+                </p>
+                <div class="research-tags">
+                    <span>Edge AI</span>
+                    <span>On-Device Learning</span>
+                    <span>llama.cpp</span>
+                    <span>Android</span>
+                </div>
+            </div>
+            <div class="research-card">
+                <div class="research-icon">🎯</div>
+                <h3>AI × BCI</h3>
+                <p>
+                    <span class="lang-zh">脑机接口跨域自适应：探索 AI 在神经科学中的创新应用，推动 BCI 系统的快速校准与跨被试迁移。</span>
+                    <span class="lang-en">Brain-Computer Interface cross-domain adaptation: exploring innovative AI applications in neuroscience, advancing rapid calibration and cross-subject transfer for BCI systems.</span>
+                </p>
+                <div class="research-tags">
+                    <span>BCI</span>
+                    <span>EEG</span>
+                    <span>Cross-Domain</span>
+                    <span>Meta-Learning</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 论文发表 -->
+<section class="section" id="publications">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Publications</span>
+            <h2 class="section-title"><span class="lang-zh">学术论文</span><span class="lang-en">Publications</span></h2>
+        </div>
+
+        <div class="pub-tabs">
+            <button class="pub-tab active" onclick="switchPubTab('published')">
+                <span class="lang-zh">已录用 (4)</span><span class="lang-en">Accepted (4)</span>
+            </button>
+            <button class="pub-tab" onclick="switchPubTab('inprogress')">
+                <span class="lang-zh">在投/在研 (3)</span><span class="lang-en">In Progress (3)</span>
+            </button>
+        </div>
+
+        <div class="pub-content" id="pub-published">
+            <div class="pub-card ccf-a">
+                <div class="pub-rank">CCF-A</div>
+                <div class="pub-header">
+                    <h3><a href="papers/ACL2026_4655_Revealing_Procedural_Reas.pdf" target="_blank" style="color:var(--text-heading);">Revealing Procedural Reasoning Structures in Chain-of-Thought Training via Span-Level Gradient Organization</a></h3>
+                    <span class="pub-venue">ACL 2026 · Main Conference Poster</span>
+                </div>
+                <div class="pub-meta">
+                    <span class="pub-author"><span class="lang-zh">二作</span><span class="lang-en">2nd Author</span></span>
+                    <span class="pub-rating">Rating 8/10</span>
+                    <span class="pub-status accepted">
+                        <span class="lang-zh">已录用</span><span class="lang-en">Accepted</span>
+                    </span>
+                </div>
+                <p class="pub-desc">
+                    <span class="lang-zh">通过跨度级梯度组织揭示 CoT 训练中的程序推理结构。Top 50% of accepted papers, clear accept。</span>
+                    <span class="lang-en">Revealing procedural reasoning structures in Chain-of-Thought training via span-level gradient organization. Top 50% of accepted papers, clear accept.</span>
+                </p>
+            </div>
+
+            <div class="pub-card ccf-a">
+                <div class="pub-rank">CCF-A</div>
+                <div class="pub-header">
+                    <h3><a href="papers/ICML2026_9079_The_Geometry_of_Narrow_Fi.pdf" target="_blank" style="color:var(--text-heading);">The Geometry of Narrow Fine-Tuning Degradation: Trajectory Lock-in and Spectral Bifurcation</a></h3>
+                    <span class="pub-venue">ICML 2026 · Regular Paper</span>
+                </div>
+                <div class="pub-meta">
+                    <span class="pub-author"><span class="lang-zh">二作</span><span class="lang-en">2nd Author</span></span>
+                    <span class="pub-rating">Rating 4/4/4/4</span>
+                    <span class="pub-status accepted">
+                        <span class="lang-zh">已录用</span><span class="lang-en">Accepted</span>
+                    </span>
+                </div>
+                <p class="pub-desc">
+                    <span class="lang-zh">探究窄微调退化的几何本质：轨迹锁定与谱分叉。四位审稿人全部给出满分 4 分。</span>
+                    <span class="lang-en">Investigating the geometric nature of narrow fine-tuning degradation: trajectory lock-in and spectral bifurcation. All four reviewers scored 4/4.</span>
+                </p>
+            </div>
+
+            <div class="pub-card ccf-a">
+                <div class="pub-rank">CCF-A</div>
+                <div class="pub-header">
+                    <h3><a href="papers/KDD2026_3421_Mining_Point_of_No_Return.pdf" target="_blank" style="color:var(--text-heading);">Mining Point-of-No-Return Boundaries in Constrained Dynamical Systems via Counterfactual Auditing</a></h3>
+                    <span class="pub-venue">KDD 2026 · Research Track</span>
+                </div>
+                <div class="pub-meta">
+                    <span class="pub-author"><span class="lang-zh">二作</span><span class="lang-en">2nd Author</span></span>
+                    <span class="pub-status accepted">
+                        <span class="lang-zh">已录用</span><span class="lang-en">Accepted</span>
+                    </span>
+                </div>
+                <p class="pub-desc">
+                    <span class="lang-zh">通过反事实审计挖掘约束动态系统中的不可返回边界。与刘嘉师姐合作的数据挖掘顶会工作。</span>
+                    <span class="lang-en">Mining point-of-no-return boundaries in constrained dynamical systems via counterfactual auditing. Collaborated with Jia Liu on this top data mining conference paper.</span>
+                </p>
+            </div>
+
+            <div class="pub-card ccf-b">
+                <div class="pub-rank">SCI Q1</div>
+                <div class="pub-header">
+                    <h3><a href="papers/SymPareto_A_Dynamic_GainDegradation_Co-Evolution_Framework_for_Pareto-Optimal_Task_Scheduling_in_Autonomous_Intelligent_Systems.pdf" target="_blank" style="color:var(--text-heading);">SymPareto: A Dynamic Gain–Degradation Co-Evolution Framework for Pareto-Optimal Task Scheduling in Autonomous Intelligent Systems</a></h3>
+                    <span class="pub-venue">IEEE Transactions on Consumer Electronics, Vol. 71, No. 4, 2025 · IF: 10.9</span>
+                </div>
+                <div class="pub-meta">
+                    <span class="pub-author"><span class="lang-zh">二作</span><span class="lang-en">2nd Author</span></span>
+                    <span class="pub-status accepted">
+                        <span class="lang-zh">已录用</span><span class="lang-en">Accepted</span>
+                    </span>
+                </div>
+                <p class="pub-desc">
+                    <span class="lang-zh">提出反馈驱动的 Pareto 最优任务调度框架，建模人机技能协同演化动态，较非 Pareto 基线性能提升 77.18%。</span>
+                    <span class="lang-en">A feedback-driven Pareto-optimal task scheduling framework modeling human-AI skill co-evolution dynamics, achieving 77.18% improvement over non-Pareto baselines.</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="pub-content hidden" id="pub-inprogress">
+            <div class="pub-card submitted">
+                <div class="pub-header">
+                    <h3>NeuroLoop</h3>
+                    <span class="pub-venue">UbiComp/IMWUT 2026</span>
+                </div>
+                <div class="pub-meta">
+                    <span class="pub-author first"><span class="lang-zh">一作</span><span class="lang-en">1st Author</span></span>
+                    <span class="pub-status submitted">
+                        <span class="lang-zh">已投稿</span><span class="lang-en">Submitted</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="pub-card preparing">
+                <div class="pub-header">
+                    <h3>NDS-HyperAdapter</h3>
+                    <span class="pub-venue">AAAI 2027</span>
+                </div>
+                <div class="pub-meta">
+                    <span class="pub-author first"><span class="lang-zh">一作</span><span class="lang-en">1st Author</span></span>
+                    <span class="pub-status preparing">
+                        <span class="lang-zh">准备中</span><span class="lang-en">Preparing</span>
+                    </span>
+                    <span class="pub-deadline">DDL: 2026-07-28</span>
+                </div>
+            </div>
+
+            <div class="pub-card preparing">
+                <div class="pub-header">
+                    <h3>ManifoldMerge</h3>
+                    <span class="pub-venue">ICLR 2027</span>
+                </div>
+                <div class="pub-meta">
+                    <span class="pub-author first"><span class="lang-zh">一作</span><span class="lang-en">1st Author</span></span>
+                    <span class="pub-status preparing">
+                        <span class="lang-zh">准备中</span><span class="lang-en">Preparing</span>
+                    </span>
+                    <span class="pub-deadline">DDL: 2026-09-28</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 项目 -->
+<section class="section section-alt" id="projects">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Projects</span>
+            <h2 class="section-title"><span class="lang-zh">项目经历</span><span class="lang-en">Projects</span></h2>
+        </div>
+        <div class="project-grid">
+            <div class="project-card featured">
+                <div class="project-header">
+                    <div class="project-icon">🧠</div>
+                    <div class="project-status active">
+                        <span class="lang-zh">进行中</span><span class="lang-en">Active</span>
+                    </div>
+                </div>
+                <h3>NeuroLoop</h3>
+                <p class="project-subtitle">
+                    <span class="lang-zh">AI for BCI · 科技部国家重点项目</span>
+                    <span class="lang-en">AI for BCI · National Key Project</span>
+                </p>
+                <p class="project-desc">
+                    <span class="lang-zh">AI 赋能脑机接口的跨域自适应研究项目。</span>
+                    <span class="lang-en">AI-empowered BCI cross-domain adaptation research project.</span>
+                </p>
+                <div class="project-meta">
+                    <span>Python</span>
+                    <span>PyTorch</span>
+                    <span>EEG</span>
+                    <span>MOABB</span>
+                    <span>Edge AI</span>
+                </div>
+            </div>
+
+            <div class="project-card featured">
+                <div class="project-header">
+                    <div class="project-icon">⚡</div>
+                    <div class="project-status active">
+                        <span class="lang-zh">进行中</span><span class="lang-en">Active</span>
+                    </div>
+                </div>
+                <h3>ContinualEdge</h3>
+                <p class="project-subtitle">
+                    <span class="lang-zh">端侧持续自适应 Agent 运行时</span>
+                    <span class="lang-en">Continual Edge Adaptive Agent Runtime</span>
+                </p>
+                <p class="project-desc">
+                    <span class="lang-zh">端侧 LLM 持续自适应运行时，支持多域动态调度与端侧增量学习。</span>
+                    <span class="lang-en">Continual learning runtime for edge LLM agents with multi-domain scheduling and on-device incremental learning.</span>
+                </p>
+                <div class="project-meta">
+                    <span>Kotlin</span>
+                    <span>Go</span>
+                    <span>llama.cpp</span>
+                    <span>Android</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">🔧</div>
+                    <div class="project-status active">
+                        <span class="lang-zh">运营中</span><span class="lang-en">Operating</span>
+                    </div>
+                </div>
+                <h3>
+                    <span class="lang-zh">智慧维保平台</span>
+                    <span class="lang-en">Smart Maintenance SaaS</span>
+                </h3>
+                <p class="project-subtitle">
+                    <span class="lang-zh">电梯维保 AIoT SaaS · 技术负责人</span>
+                    <span class="lang-en">Elevator Maintenance AIoT SaaS · Tech Lead</span>
+                </p>
+                <p class="project-desc">
                     <span class="lang-zh">面向电梯维保行业的法律风控级 SaaS。执法仪视频实时上传、GPS 校验防作弊、证据链不可篡改审计。</span>
                     <span class="lang-en">Legal-grade SaaS for elevator maintenance. Bodycam video upload, GPS anti-cheat, tamper-proof evidence chain.</span>
                 </p>
-                <div class="meta"><span>Go</span><span>Kotlin</span><span>PostgreSQL</span><span>MinIO</span></div>
+                <div class="project-meta">
+                    <span>Go</span>
+                    <span>Kotlin</span>
+                    <span>PostgreSQL</span>
+                    <span>MinIO</span>
+                </div>
             </div>
-            <div class="card">
-                <h3>📝 Tech Blog</h3>
-                <p>
-                    <span class="lang-zh">本站点。记录从论文阅读、工程实践到职业发展的完整思考链路。</span>
-                    <span class="lang-en">This site. A searchable knowledge base for paper readings, engineering practice, and career thinking.</span>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">🔒</div>
+                    <div class="project-status patent">
+                        <span class="lang-zh">专利</span><span class="lang-en">Patent</span>
+                    </div>
+                </div>
+                <h3>
+                    <span class="lang-zh">LoRA 在线合并推理服务系统</span>
+                    <span class="lang-en">LoRA Online Merging Inference System</span>
+                </h3>
+                <p class="project-subtitle">
+                    <span class="lang-zh">第一发明人 · 已申请</span>
+                    <span class="lang-en">1st Inventor · Filed</span>
                 </p>
-                <div class="meta"><span>GitHub Pages</span><span>HTML/CSS</span></div>
+                <p class="project-desc">
+                    <span class="lang-zh">低秩适配器在线合并推理服务系统。</span>
+                    <span class="lang-en">Low-rank adapter online merging inference service system.</span>
+                </p>
+                <div class="project-meta">
+                    <span>Grassmann</span>
+                    <span>Geodesic</span>
+                    <span>LoRA</span>
+                    <span>Phase Transition</span>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section" id="papers">
+<!-- 工作经历 -->
+<section class="section" id="experience">
     <div class="container">
-        <h2 class="section-title"><span class="lang-zh">学术经历</span><span class="lang-en">Research</span></h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4>ACL 2026 · Main Conference Poster <span class="tag">2nd Author</span></h4>
-                <p>Revealing Procedural Reasoning Structures in CoT Training · Rating 8/10</p>
+        <div class="section-header">
+            <span class="section-tag">Experience</span>
+            <h2 class="section-title"><span class="lang-zh">工作与组织经历</span><span class="lang-en">Experience</span></h2>
+        </div>
+        <div class="exp-grid">
+            <div class="exp-card">
+                <div class="exp-icon">🎓</div>
+                <div class="exp-content">
+                    <h4>
+                        <span class="lang-zh">研究生会主席团成员</span>
+                        <span class="lang-en">Graduate Student Union Executive</span>
+                    </h4>
+                    <div class="exp-org">SCUT Computer School</div>
+                    <div class="exp-time">2025.09 — Present</div>
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4>ICML 2026 · Accept (Regular) <span class="tag">2nd Author</span></h4>
-                <p>Rating 4/4/4/4 · Four reviewers all scored 4</p>
+            <div class="exp-card">
+                <div class="exp-icon">📝</div>
+                <div class="exp-content">
+                    <h4>
+                        <span class="lang-zh">研究生会秘书部部员</span>
+                        <span class="lang-en">Graduate Union Secretariat</span>
+                    </h4>
+                    <div class="exp-org">SCUT Computer School</div>
+                    <div class="exp-time">2024.09 — 2025.06</div>
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4>KDD 2026 · Accepted <span class="tag green">2nd Author</span></h4>
-                <p>与刘嘉师姐合作 · 数据挖掘顶会</p>
+            <div class="exp-card">
+                <div class="exp-icon">📰</div>
+                <div class="exp-content">
+                    <h4>
+                        <span class="lang-zh">记者团采编部副部长</span>
+                        <span class="lang-en">Press Corps Deputy Editor</span>
+                    </h4>
+                    <div class="exp-org">SCUT Press Corps</div>
+                    <div class="exp-time">2021.09 — 2022.06</div>
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4>IEEE TCE · Accepted <span class="tag">2nd Author</span></h4>
-                <p>IEEE Transactions on Consumer Electronics</p>
-            </div>
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4>UbiComp/IMWUT · Submitted <span class="tag orange">1st Author</span></h4>
-                <p>NeuroLoop: Data-Driven Virtual Subject Twinning for BCI Rapid Calibration</p>
-            </div>
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4>AAAI 2027 · In Progress <span class="tag orange">1st Author</span></h4>
-                <p>冷启动后自适应策略 · 截稿 2026-07-28</p>
-            </div>
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4>ICLR 2027 · In Progress <span class="tag orange">1st Author</span></h4>
-                <p>DomainFingerprintMerge: Manifold-Aware Task Merging for Continual LLMs · 截稿 2026-09-28</p>
-            </div>
-            <div class="timeline-item">
-                <div class="time">2026</div>
-                <h4><span class="lang-zh">华南理工大学 · 博士入学</span><span class="lang-en">SCUT · PhD Enrollment</span></h4>
-                <p><span class="lang-zh">计算机学院 · 研究方向：LLM Post-Training Adaptation</span><span class="lang-en">School of Computer Science · LLM Post-Training Adaptation</span></p>
+            <div class="exp-card">
+                <div class="exp-icon">📺</div>
+                <div class="exp-content">
+                    <h4>
+                        <span class="lang-zh">南方都市报实习记者</span>
+                        <span class="lang-en">Southern Metropolis Daily Intern</span>
+                    </h4>
+                    <div class="exp-org">Southern Metropolis Daily</div>
+                    <div class="exp-time">2021.07 — 2021.10</div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section" id="posts">
+<!-- 技能 -->
+<section class="section section-alt" id="skills">
     <div class="container">
-        <h2 class="section-title"><span class="lang-zh">文章</span><span class="lang-en">Posts</span></h2>
-        <div class="post-list">
-            <a href="posts/continual-edge-design.html" class="post-item" style="text-decoration:none; color:inherit;">
-                <h4>⚡ ContinualEdge 系统设计：端侧 LLM 持续自适应运行时</h4>
-                <span class="post-date">2026-05-20 · System Design</span>
-                <p>从电梯维保场景抽象出的领域无关端侧 Agent 运行时。Domain Adapter Card、指纹调度、热切换、自动合并、端云协同...</p>
+        <div class="section-header">
+            <span class="section-tag">Skills</span>
+            <h2 class="section-title"><span class="lang-zh">技术栈</span><span class="lang-en">Tech Stack</span></h2>
+        </div>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h4>
+                    <span class="lang-zh">编程语言</span>
+                    <span class="lang-en">Languages</span>
+                </h4>
+                <div class="skill-items">
+                    <div class="skill-item" data-level="95"><span>Python</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="85"><span>Go</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="80"><span>Kotlin</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="75"><span>C/C++</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4>
+                    <span class="lang-zh">AI / 深度学习</span>
+                    <span class="lang-en">AI / Deep Learning</span>
+                </h4>
+                <div class="skill-items">
+                    <div class="skill-item" data-level="95"><span>PyTorch</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="90"><span>LLM Fine-tuning</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="90"><span>PEFT / LoRA</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="85"><span>Model Merging</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="85"><span>BCI / EEG</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4>
+                    <span class="lang-zh">工程 / 基础设施</span>
+                    <span class="lang-en">Engineering / Infra</span>
+                </h4>
+                <div class="skill-items">
+                    <div class="skill-item" data-level="85"><span>Docker</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="80"><span>PostgreSQL</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="80"><span>Event Sourcing</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="85"><span>Git</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                    <div class="skill-item" data-level="80"><span>Edge AI</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 获奖 -->
+<section class="section" id="awards">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Awards</span>
+            <h2 class="section-title"><span class="lang-zh">获奖情况</span><span class="lang-en">Awards</span></h2>
+        </div>
+        <div class="awards-grid">
+            <div class="award-card">
+                <div class="award-icon">🏆</div>
+                <div class="award-content">
+                    <h4>互联网+ 竞赛</h4>
+                    <p>广东省银奖 · 华南理工大学校级金奖</p>
+                    <span class="award-year">2024</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 博客文章 -->
+<section class="section section-alt" id="posts">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Blog</span>
+            <h2 class="section-title"><span class="lang-zh">技术博客</span><span class="lang-en">Tech Blog</span></h2>
+        </div>
+        <div class="post-grid">
+            <a href="posts/post.html?p=0" class="post-card">
+                <div class="post-date">2026-06-01</div>
+                <h4><span class="lang-zh">跨域自适应笔记（一）：基础概念与误差界</span><span class="lang-en">Cross-Domain Adaptation Notes (01): Basics & Error Bounds</span></h4>
+                <p><span class="lang-zh">Ben-David 理论框架、MMD/Wasserstein/H-散度三大距离、误差上界分解与跨域泛化界。</span><span class="lang-en">Ben-David theoretical framework, MMD/Wasserstein/H-divergence, error bound decomposition and cross-domain generalization bounds.</span></p>
+                <span class="post-tag">Theory</span>
             </a>
-            <a href="posts/why-llm-post-training.html" class="post-item" style="text-decoration:none; color:inherit;">
-                <h4>为什么我选择 LLM Post-Training 作为博士方向</h4>
-                <span class="post-date">2026-05-10 · Research</span>
-                <p>从 BCI 到 LLM 的迁移，看似跨度很大，实则共享同一个核心问题：如何让模型在动态环境中持续适应而不遗忘...</p>
+            <a href="posts/post.html?p=1" class="post-card">
+                <div class="post-date">2026-06-02</div>
+                <h4><span class="lang-zh">跨域自适应笔记（二）：Rademacher 与 Sinkhorn</span><span class="lang-en">Cross-Domain Adaptation Notes (02): Rademacher & Sinkhorn</span></h4>
+                <p><span class="lang-zh">Rademacher 复杂度与泛化界、Sinkhorn 算法与熵正则化最优传输、IRM 不变风险最小化。</span><span class="lang-en">Rademacher complexity and generalization bounds, Sinkhorn algorithm and entropy-regularized OT, Invariant Risk Minimization.</span></p>
+                <span class="post-tag">Theory</span>
             </a>
-            <a href="posts/elevator-saas-30days.html" class="post-item" style="text-decoration:none; color:inherit;">
-                <h4>电梯 SaaS 创业 30 天：从 0 到 Demo 的技术决策复盘</h4>
-                <span class="post-date">2026-04-20 · Engineering</span>
-                <p>Clean Architecture 在快速迭代中的利弊，Event Sourcing 的过度设计陷阱，以及为什么最终选择 Go + Kotlin...</p>
+            <a href="posts/post.html?p=2" class="post-card">
+                <div class="post-date">2026-06-03</div>
+                <h4><span class="lang-zh">跨域自适应笔记（三）：PAC-Bayes 与因果推断</span><span class="lang-en">Cross-Domain Adaptation Notes (03): PAC-Bayes & Causal Inference</span></h4>
+                <p><span class="lang-zh">PAC-Bayes 泛化界、Bures-Wasserstein 几何、Pearl 因果推断框架、测试时适应（TTA）。</span><span class="lang-en">PAC-Bayes generalization bounds, Bures-Wasserstein geometry, Pearl's causal inference framework, Test-Time Adaptation.</span></p>
+                <span class="post-tag">Theory</span>
             </a>
-            <a href="posts/iclr-domain-fingerprint.html" class="post-item" style="text-decoration:none; color:inherit;">
-                <h4>ICLR 2027 工作笔记：DomainFingerprintMerge 的算法细节</h4>
-                <span class="post-date">2026-04-15 · Paper Notes</span>
-                <p>层-wise 分布距离、CKA + Wasserstein-2 混合度量、分层合并的数学推导与实现陷阱...</p>
+            <a href="posts/post.html?p=3" class="post-card">
+                <div class="post-date">2026-06-04</div>
+                <h4><span class="lang-zh">跨域自适应笔记（四）：信息瓶颈与 MAML</span><span class="lang-en">Cross-Domain Adaptation Notes (04): Information Bottleneck & MAML</span></h4>
+                <p><span class="lang-zh">信息瓶颈理论、Grassmann 流形与子空间对齐、MAML 元学习、度量学习与分布距离。</span><span class="lang-en">Information Bottleneck theory, Grassmann manifold & subspace alignment, MAML meta-learning, metric learning & distribution distances.</span></p>
+                <span class="post-tag">Theory</span>
             </a>
-            <a href="posts/neuro-loop-bci.html" class="post-item" style="text-decoration:none; color:inherit;">
-                <h4>NeuroLoop：BCI 跨被试自适应的生理表型方法</h4>
-                <span class="post-date">2026-03-26 · BCI Research</span>
-                <p>μ-SNR 生理指纹、Virtual Subject Library、4-shot 探测 + 16-shot 微调的完整流水线...</p>
+            <a href="posts/post.html?p=4" class="post-card">
+                <div class="post-date">2026-06-05</div>
+                <h4><span class="lang-zh">跨域自适应笔记（五）：黎曼几何与 NTK</span><span class="lang-en">Cross-Domain Adaptation Notes (05): Riemannian Geometry & NTK</span></h4>
+                <p><span class="lang-zh">黎曼几何基础、神经正切核（NTK）、Schrödinger Bridge、联邦学习中的域偏移。</span><span class="lang-en">Riemannian geometry fundamentals, Neural Tangent Kernel, Schrödinger Bridge, domain shift in federated learning.</span></p>
+                <span class="post-tag">Theory</span>
+            </a>
+            <a href="posts/post.html?p=5" class="post-card">
+                <div class="post-date">2026-06-06</div>
+                <h4><span class="lang-zh">跨域自适应笔记（六）：鲁棒 OT 与谱图理论</span><span class="lang-en">Cross-Domain Adaptation Notes (06): Robust OT & Spectral Graph Theory</span></h4>
+                <p><span class="lang-zh">Unbalanced/Partial OT、谱图理论与谱聚类、贝叶斯深度学习与不确定性量化、提示学习。</span><span class="lang-en">Unbalanced/Partial OT, spectral graph theory & spectral clustering, Bayesian deep learning & uncertainty quantification, prompt learning.</span></p>
+                <span class="post-tag">Theory</span>
+            </a>
+            <a href="posts/post.html?p=6" class="post-card">
+                <div class="post-date">2026-06-07</div>
+                <h4><span class="lang-zh">跨域自适应笔记（七）：信息几何与 GW</span><span class="lang-en">Cross-Domain Adaptation Notes (07): Information Geometry & Gromov-Wasserstein</span></h4>
+                <p><span class="lang-zh">注意力即核方法、信息几何与 Fisher 度量、Do-Calculus 因果修正、Gromov-Wasserstein 距离。</span><span class="lang-en">Attention as kernel method, information geometry & Fisher metric, Do-Calculus causal correction, Gromov-Wasserstein distance.</span></p>
+                <span class="post-tag">Theory</span>
+            </a>
+            <a href="posts/post.html?p=7" class="post-card">
+                <div class="post-date">2026-06-08</div>
+                <h4><span class="lang-zh">跨域自适应笔记（八）：Adapter 与 LoRA</span><span class="lang-en">Cross-Domain Adaptation Notes (08): Adapter & LoRA</span></h4>
+                <p><span class="lang-zh">LoRA 低秩适配、Adapter 瓶颈结构、流形切空间视角、NTK 视角下的参数高效微调。</span><span class="lang-en">LoRA low-rank adaptation, Adapter bottleneck architecture, manifold tangent space perspective, NTK perspective on parameter-efficient fine-tuning.</span></p>
+                <span class="post-tag">Theory</span>
+            </a>
+            <a href="posts/post.html?p=8" class="post-card">
+                <div class="post-date">2026-06-09</div>
+                <h4><span class="lang-zh">跨域自适应笔记（九）：多域 Adapter 与模型合并</span><span class="lang-en">Cross-Domain Adaptation Notes (09): Multi-Domain Adapter & Model Merging</span></h4>
+                <p><span class="lang-zh">多域 Adapter 数学结构、特征流微分几何、NTK 谱视角、因果干预、Task Arithmetic 与 Grassmann 合并。</span><span class="lang-en">Multi-domain Adapter mathematical structure, feature flow differential geometry, NTK spectral perspective, causal intervention, Task Arithmetic & Grassmann merging.</span></p>
+                <span class="post-tag">Theory</span>
             </a>
         </div>
     </div>
 </section>
 
-<footer>
+<!-- 页脚 -->
+<footer class="footer">
     <div class="container">
-        <p>© GarrisonRom. Built with plain HTML/CSS.</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">JL</span>
+                <p>Xavier Luo (Jiaxin Luo) · 罗嘉鑫</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/GarrisonRom" target="_blank">GitHub</a>
+                <a href="mailto:csljx1127@mail.scut.edu.cn">Email</a>
+                <a href="docs/index.html">Docs</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Jiaxin Luo. Built with passion & plain HTML/CSS/JS.</p>
+        </div>
     </div>
 </footer>
 
 <script>
+// 语言切换
 function setLang(lang) {
     document.body.className = 'lang-' + lang;
     document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    localStorage.setItem('preferred-lang', lang);
 }
+
+// 恢复语言偏好，默认英文
+const savedLang = localStorage.getItem('preferred-lang') || 'en';
+if (savedLang) setLang(savedLang);
+
+// 移动端菜单
+function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// 导航高亮 & 滚动效果
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (scrollY >= sectionTop) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+
+    // Navbar background
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// 论文标签切换
+function switchPubTab(tab) {
+    document.querySelectorAll('.pub-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.pub-content').forEach(c => c.classList.add('hidden'));
+    document.getElementById('pub-' + tab).classList.remove('hidden');
+}
+
+// 技能条动画
+const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const items = entry.target.querySelectorAll('.skill-item');
+            items.forEach((item, i) => {
+                setTimeout(() => {
+                    const level = item.dataset.level;
+                    item.querySelector('.skill-fill').style.width = level + '%';
+                }, i * 100);
+            });
+            skillObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.skills-container').forEach(el => skillObserver.observe(el));
+
+// 粒子背景
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 20 + 's';
+    p.style.animationDuration = (15 + Math.random() * 20) + 's';
+    particlesContainer.appendChild(p);
+}
+
+// 平滑滚动
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
 </script>
 </body>
 </html>

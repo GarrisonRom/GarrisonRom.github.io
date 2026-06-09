@@ -1,85 +1,98 @@
 # GarrisonRom Tech Site
 
-一套完整的个人技术博客站点，包含主页、文章、技术文档中心、以及带权限的管理后台。
+A complete personal technical blog site featuring homepage, articles, documentation center, and admin panel.
 
-## 文件结构
+## File Structure
 
 ```
 garrisonrom-site/
-├── index.html              # 主页（中英文双语）
-├── style.css               # 全局样式（GitHub 深色主题）
-├── posts/                  # 文章详情页
-│   ├── continual-edge-design.html
-│   ├── why-llm-post-training.html
-│   ├── elevator-saas-30days.html
-│   ├── iclr-domain-fingerprint.html
-│   └── neuro-loop-bci.html
-├── docs/                   # 技术文档中心
-│   ├── index.html          # 文档中心入口
-│   ├── projects.html       # 项目文档
-│   ├── papers.html         # 论文档案
-│   ├── tech-spec.html      # 技术规范（ContinualEdge）
-│   ├── research-direction.html  # 研究方向
-│   └── tech-stack.html     # 技术栈
-└── admin/                  # 管理后台
-    ├── login.html          # 登录页
-    └── dashboard.html      # 内容管理面板
+├── index.html              # Homepage (Chinese/English bilingual)
+├── style.css               # Global styles (GitHub dark theme)
+├── papers/                 # Publication PDFs
+│   ├── ACL2026_4655_Revealing_Procedural_Reas.pdf
+│   ├── ICML2026_9079_The_Geometry_of_Narrow_Fi.pdf
+│   ├── KDD2026_3421_Mining_Point_of_No_Return.pdf
+│   └── SymPareto_A_Dynamic_GainDegradation_Co-Evolution_Framework_for_Pareto-Optimal_Task_Scheduling_in_Autonomous_Intelligent_Systems.pdf
+├── posts/                  # Blog posts
+│   ├── post.html           # Blog template (Markdown + KaTeX rendering)
+│   └── md/                 # Markdown source files
+│       ├── note-01.md      # Cross-Domain Adaptation Notes 01-09
+│       ├── note-02.md
+│       ├── note-03.md
+│       ├── note-04.md
+│       ├── note-05.md
+│       ├── note-06.md
+│       ├── note-07.md
+│       ├── note-08.md
+│       └── note-09.md
+├── docs/                   # Documentation center
+│   ├── index.html          # Docs entry
+│   ├── projects.html       # Project docs
+│   ├── papers.html         # Paper archive
+│   ├── tech-spec.html      # Technical specification (ContinualEdge)
+│   ├── research-direction.html  # Research directions
+│   └── tech-stack.html     # Technology stack
+└── admin/                  # Admin panel
+    ├── login.html          # Login page
+    └── dashboard.html      # Content management dashboard
 ```
 
-## 使用方式
+## Usage
 
-### 1. 本地预览
-直接用浏览器打开 `index.html` 即可。所有页面均为纯静态 HTML，无需服务器。
+### 1. Local Preview
+Open `index.html` directly in browser. All pages are static HTML, no server required.
 
-### 2. 部署到 GitHub Pages
-1. 创建 GitHub 仓库（如 `GarrisonRom.github.io`）
-2. 将这些文件推送到仓库根目录
-3. 开启 GitHub Pages（Settings → Pages → Source: main branch）
-4. 访问 `https://garrisonrom.github.io`
+### 2. Deploy to GitHub Pages
+1. Create GitHub repository (e.g., `GarrisonRom.github.io`)
+2. Push files to repository root
+3. Enable GitHub Pages (Settings → Pages → Source: main branch)
+4. Access `https://garrisonrom.github.io`
 
-### 3. 管理后台（Admin）
-- 访问 `admin/login.html`
-- 默认账号：`garrison`
-- 默认密码：`scut2026`（建议修改）
-- 登录后可编辑：学习心得、研究方向、技术栈、项目状态、论文追踪、站点配置
-- 所有数据保存在浏览器 localStorage 中，支持导出/导入 JSON 备份
+### 3. Admin Panel
+- Visit `admin/login.html`
+- Default username: `garrison`
+- Default password: `scut2026` (recommended to change)
+- After login, you can edit: study notes, research directions, tech stack, project status, paper tracking, site configuration
+- All data stored in browser localStorage, supports export/import JSON backup
 
-**注意**：当前登录验证为前端模拟，仅适用于个人本地使用。若需线上部署，请增加后端鉴权。
+**Note**: Current authentication is frontend-only simulation, suitable for personal local use. For production deployment, add backend authentication.
 
-## 技术特点
+## Features
 
-- **纯静态**：无构建工具，无依赖，直接可运行
-- **双语切换**：中英文一键切换（JavaScript 控制 CSS 显隐）
-- **响应式**：适配手机端（2.4 寸屏到桌面端）
-- **深色主题**：GitHub 风格配色，护眼且专业
-- **模块化**：新增文章只需在 `posts/` 下新建 HTML，主页自动链接
+- **Static**: No build tools, no dependencies, ready to run
+- **Bilingual**: Chinese/English toggle (JavaScript-controlled CSS visibility)
+- **Responsive**: Mobile to desktop (2.4" to desktop)
+- **Dark Theme**: GitHub-style color scheme, eye-friendly and professional
+- **Math Support**: KaTeX rendering for mathematical formulas in blog posts
+- **Markdown Support**: Markdown to HTML conversion for blog content
 
-## 自定义指南
+## Customization Guide
 
-### 修改个人信息
-编辑 `admin/dashboard.html` 中的 `DEFAULTS.settings`，或登录后台修改站点配置。
+### Modify Personal Info
+Edit `admin/dashboard.html` or login to admin panel to modify site settings.
 
-### 新增文章
-1. 在 `posts/` 下新建 `.html` 文件（复制现有文章模板）
-2. 在 `index.html` 的 `#posts` 区块添加链接
-3. 在 admin 后台的"学习心得"面板添加条目
+### Add New Articles
+1. Add Markdown file in `posts/md/`
+2. Update `posts/post.html` to include the new post
+3. Add link in `index.html` #posts section
 
-### 修改密码
-编辑 `admin/login.html` 中的 `ADMIN_PASS` 常量。
+### Change Password
+Edit `ADMIN_PASS` constant in `admin/login.html`.
 
-## 配色参考
+## Color Reference
 
-| Token | 色值 | 用途 |
-|-------|------|------|
-| `--bg` | `#0d1117` | 主背景 |
-| `--bg-secondary` | `#161b22` | 卡片背景 |
-| `--border` | `#30363d` | 边框 |
-| `--text` | `#c9d1d9` | 主文字 |
-| `--text-heading` | `#f0f6fc` | 标题 |
-| `--blue` | `#58a6ff` | 强调色/链接 |
-| `--green` | `#3fb950` | 成功/录取 |
-| `--orange` | `#f0883e` | 警告/投稿中 |
-| `--red` | `#f85149` | 错误/拒绝 |
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--bg` | `#0d1117` | Main background |
+| `--bg-secondary` | `#161b22` | Card background |
+| `--border` | `#30363d` | Border |
+| `--text` | `#c9d1d9` | Main text |
+| `--text-heading` | `#f0f6fc` | Headings |
+| `--blue` | `#58a6ff` | Accent/links |
+| `--green` | `#3fb950` | Success/Accepted |
+| `--orange` | `#f0883e` | Warning/Submitted |
+| `--red` | `#f85149` | Error/Rejected |
+| `--purple` | `#a371f7` | Highlight/Motto |
 
 ---
-Built by Jiaxin Luo (GarrisonRom).
+Built by Xavier Luo (Jiaxin Luo).

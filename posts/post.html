@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post | Xavier Luo</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .blog-post-nav {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px 20px;
+        }
+        .blog-post-nav a {
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .blog-post-nav a:hover { color: var(--text-heading); }
+        .blog-post-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 24px 80px;
+            color: var(--text);
+            line-height: 1.8;
+        }
+        .blog-post-container h1 {
+            color: var(--text-heading);
+            font-size: 1.8rem;
+            margin: 0 0 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .blog-post-container h2 {
+            color: var(--text-heading);
+            font-size: 1.4rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .blog-post-container h3 {
+            color: var(--text-heading);
+            font-size: 1.15rem;
+            margin: 32px 0 12px;
+        }
+        .blog-post-container h4 {
+            color: var(--text-heading);
+            font-size: 1.05rem;
+            margin: 24px 0 8px;
+        }
+        .blog-post-container p {
+            margin: 12px 0;
+            color: var(--text);
+        }
+        .blog-post-container strong {
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+        .blog-post-container a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+        .blog-post-container a:hover {
+            color: var(--text-heading);
+            text-decoration: underline;
+        }
+        .blog-post-container ul, .blog-post-container ol {
+            margin: 8px 0;
+            padding-left: 24px;
+        }
+        .blog-post-container li {
+            margin: 4px 0;
+        }
+        .blog-post-container blockquote {
+            border-left: 3px solid var(--blue);
+            padding: 8px 16px;
+            margin: 16px 0;
+            background: var(--blue-dim);
+            border-radius: 0 6px 6px 0;
+            color: var(--text-secondary);
+        }
+        .blog-post-container code {
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+            color: var(--orange);
+        }
+        .blog-post-container pre {
+            background: var(--bg-tertiary);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid var(--border);
+        }
+        .blog-post-container pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+        }
+        .blog-post-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.92em;
+        }
+        .blog-post-container th, .blog-post-container td {
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .blog-post-container th {
+            background: var(--bg-tertiary);
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+        .blog-post-container hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+        .blog-post-container .katex-display {
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+        .blog-post-container .math-block {
+            margin: 16px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .blog-nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        .blog-nav-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .blog-nav-links a:hover {
+            background: var(--blue-dim);
+            border-color: var(--blue);
+            color: var(--blue);
+            text-decoration: none;
+        }
+        .blog-nav-links a.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .loading {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body class="lang-en">
+
+<nav id="navbar" class="scrolled">
+    <div class="container nav-container">
+        <a href="../index.html" class="logo">
+            <span class="logo-icon">JL</span>
+            <span class="logo-text">Xavier Luo</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html#about"><span class="lang-zh">关于</span><span class="lang-en">About</span></a>
+            <a href="../index.html#publications"><span class="lang-zh">论文</span><span class="lang-en">Publications</span></a>
+            <a href="../index.html#posts"><span class="lang-zh">博客</span><span class="lang-en">Blog</span></a>
+        </div>
+    </div>
+</nav>
+
+<div class="blog-post-nav">
+    <a href="../index.html#posts">&larr; <span class="lang-zh">返回博客</span><span class="lang-en">Back to Blog</span></a>
+</div>
+
+<div class="blog-post-container">
+    <div class="loading" id="loading">Loading...</div>
+    <div id="content"></div>
+    <div class="blog-nav-links" id="nav-links"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script>
+// Blog post metadata
+const posts = [
+    { file: 'note-01', title_zh: '跨域自适应笔记（一）：基础概念与误差界', title_en: 'Basics & Error Bounds' },
+    { file: 'note-02', title_zh: '跨域自适应笔记（二）：Rademacher 与 Sinkhorn', title_en: 'Rademacher & Sinkhorn' },
+    { file: 'note-03', title_zh: '跨域自适应笔记（三）：PAC-Bayes 与因果推断', title_en: 'PAC-Bayes & Causal Inference' },
+    { file: 'note-04', title_zh: '跨域自适应笔记（四）：信息瓶颈与 MAML', title_en: 'Information Bottleneck & MAML' },
+    { file: 'note-05', title_zh: '跨域自适应笔记（五）：黎曼几何与 NTK', title_en: 'Riemannian Geometry & NTK' },
+    { file: 'note-06', title_zh: '跨域自适应笔记（六）：鲁棒 OT 与谱图理论', title_en: 'Robust OT & Spectral Graph Theory' },
+    { file: 'note-07', title_zh: '跨域自适应笔记（七）：信息几何与 GW', title_en: 'Information Geometry & Gromov-Wasserstein' },
+    { file: 'note-08', title_zh: '跨域自适应笔记（八）：Adapter 与 LoRA', title_en: 'Adapter & LoRA' },
+    { file: 'note-09', title_zh: '跨域自适应笔记（九）：多域 Adapter 与模型合并', title_en: 'Multi-Domain Adapter & Model Merging' }
+];
+
+// Get current post index from URL
+const params = new URLSearchParams(window.location.search);
+const postIndex = parseInt(params.get('p') || '0');
+const currentPost = posts[postIndex];
+
+if (currentPost) {
+    document.title = currentPost.title_zh + ' | Xavier Luo';
+}
+
+// Render math with KaTeX
+function renderMath(text) {
+    // Block math: $$...$$
+    text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, formula) => {
+        try {
+            return '<div class="math-block">' + katex.renderToString(formula.trim(), { displayMode: true, throwOnError: false }) + '</div>';
+        } catch (e) {
+            return '<div class="math-block">' + formula + '</div>';
+        }
+    });
+    // Inline math: $...$
+    text = text.replace(/\$([^\$\n]+?)\$/g, (match, formula) => {
+        try {
+            return katex.renderToString(formula.trim(), { displayMode: false, throwOnError: false });
+        } catch (e) {
+            return formula;
+        }
+    });
+    return text;
+}
+
+// Configure marked
+marked.setOptions({
+    breaks: true,
+    gfm: true
+});
+
+// Fetch and render markdown
+fetch('md/' + currentPost.file + '.md')
+    .then(r => r.text())
+    .then(md => {
+        document.getElementById('loading').style.display = 'none';
+        // Render math before markdown
+        const withMath = renderMath(md);
+        const html = marked.parse(withMath);
+        document.getElementById('content').innerHTML = html;
+
+        // Navigation links
+        const navHtml = [];
+        if (postIndex > 0) {
+            navHtml.push('<a href="post.html?p=' + (postIndex - 1) + '">&larr; ' + posts[postIndex - 1].title_zh + '</a>');
+        } else {
+            navHtml.push('<a class="disabled">&larr;</a>');
+        }
+        if (postIndex < posts.length - 1) {
+            navHtml.push('<a href="post.html?p=' + (postIndex + 1) + '">' + posts[postIndex + 1].title_zh + ' &rarr;</a>');
+        } else {
+            navHtml.push('<a class="disabled">&rarr;</a>');
+        }
+        document.getElementById('nav-links').innerHTML = navHtml.join('');
+    })
+    .catch(err => {
+        document.getElementById('loading').textContent = 'Failed to load content.';
+        console.error(err);
+    });
+
+// Language toggle
+function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    localStorage.setItem('preferred-lang', lang);
+}
+const savedLang = localStorage.getItem('preferred-lang') || 'en';
+setLang(savedLang);
+</script>
+</body>
+</html>
